@@ -42,8 +42,7 @@ export default function Onboarding() {
           </Text>
 
           <Text className="mt-2 text-[15px] text-gray-500 text-center leading-5 w-[85%]">
-            Achieve weight loss with balanced workouts, mindful diet and guided
-            training.
+            Achieve weight loss with balanced workouts, mindful diet and guided training.
           </Text>
 
           <Pressable

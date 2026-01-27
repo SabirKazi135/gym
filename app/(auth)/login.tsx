@@ -1,5 +1,7 @@
 import { router } from "expo-router";
-import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function Login() {
   return (
@@ -37,7 +39,7 @@ export default function Login() {
         {/* Signup */}
         <View className="mt-4 flex-row justify-center">
           <Text className="text-gray-500">Don’t have an account? </Text>
-          <Pressable onPress={() => router.push("/(auth)/signup")}>
+          <Pressable>
             <Text className="text-black font-bold">Sign Up</Text>
           </Pressable>
         </View>

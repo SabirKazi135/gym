@@ -30,7 +30,9 @@ module.exports = {
       },
       borderRadius: {
         sm: "5px",
-        md: "30px",
+        md: "10px",
+        lg: "30px",
+        xl: "40px",
       },
       fontFamily: {
         light: ["MontserratLight"],

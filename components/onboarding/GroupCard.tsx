@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Image,
-  useWindowDimensions,
 } from "react-native";
 
 
@@ -33,8 +32,6 @@ export default function GroupCard({
     text,
     members,
 }: CardProps) {
-    // const { width, height } = useWindowDimensions();
-    // console.log(width)
     return(
         <View className="w-[45%] aspect-[3/5] bg-white rounded-md flex-col shadow-2xl items-center ">
             <Image source={require('assets/images/Group-card-img.png')} className="w-full h-3/5 rounded-tl-md rounded-tr-md" resizeMode="cover" />
@@ -57,21 +54,3 @@ export default function GroupCard({
         </View>
     )
 };
-
-
-// const styles = StyleSheet.create({
-//     avatarContainer: {
-//         backgroundColor: '#E0E0E0',
-//         width: 
-//         alignItems: 'center',   
-//         marginHorizontal: 5,
-//     },
-//     avatarText: {
-//         fontSize: 16,   
-//         fontWeight: 'bold',
-//     },
-//     avatarDescription: {
-//         fontSize: 12,
-//         color: 'gray',
-//     },
-// });

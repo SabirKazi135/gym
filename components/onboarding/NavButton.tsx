@@ -37,7 +37,7 @@ export default function NavButton({
 
   return (
     <Pressable
-      className={`bg-orange-500 h-[52px] items-center justify-center ${widthClass} ${radiusClass}`}
+      className={`bg-primary h-[52px] items-center justify-center ${widthClass} ${radiusClass}`}
       style={customRadiusStyle} // ✅ dynamic px radius
       onPress={handlePress}
     >

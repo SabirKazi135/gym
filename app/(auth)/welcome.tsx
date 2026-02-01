@@ -30,7 +30,7 @@ export default function Welcome() {
           </View>
           <View className="w-full justify-center gap-3 pt-3 flex">
             <NavButton title="Login" to="/(auth)/login" />
-            <NavButton title="SignUp" to="/(auth)/signin" />
+            <NavButton title="SignUp" to="/(auth)/input" />
           </View>
         </View>
       </View>

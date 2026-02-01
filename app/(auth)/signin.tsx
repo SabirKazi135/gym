@@ -27,7 +27,7 @@ export default function SignIn() {
     try {
       setError(null);
       await signup({ firstName, lastName, email, password });
-      router.replace("/(main)/home");
+      router.replace("/(onboarding)/userDetails1");
     } catch (err: any) {
       setError(err?.message ?? "Signup failed");
     }

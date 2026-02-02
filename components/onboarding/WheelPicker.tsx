@@ -164,6 +164,7 @@ import {
   View,
   TouchableOpacity,
   Animated,
+  ScrollView,
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from "react-native";
@@ -182,42 +183,40 @@ const ages = Array.from({ length: 83 }, (_, i) => i + 18);
 
 const AgeWheelPicker: React.FC<AgeWheelPickerProps> = ({ value, onChange }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
-  const scrollViewRef = useRef<Animated.ScrollView | null>(null);
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const hasInitialScroll = useRef(false);
+  const initialValueRef = useRef(value);
 
-  const isSnapping = useRef(false);
-  const initialIndex = ages.indexOf(value);
-
-  // 🔒 initial positioning
+  // 🔒 Initial positioning only on mount — prevents glitch when onChange triggers parent re-render
   useEffect(() => {
+    if (hasInitialScroll.current) return;
+    hasInitialScroll.current = true;
+    const idx = ages.indexOf(initialValueRef.current);
     requestAnimationFrame(() => {
       scrollViewRef.current?.scrollTo({
-        y: initialIndex * ITEM_HEIGHT,
+        y: idx * ITEM_HEIGHT,
         animated: false,
       });
     });
-  }, [initialIndex]);
+  }, []);
 
-  // ✅ STABLE snap handler (glitch-free)
+  // Only report selected value — no programmatic scroll (no roll back)
+  const reportSelection = (contentOffsetY: number) => {
+    const index = Math.max(
+      0,
+      Math.min(ages.length - 1, Math.round(contentOffsetY / ITEM_HEIGHT))
+    );
+    onChange?.(ages[index]);
+  };
+
   const handleMomentumScrollEnd = (
     e: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
-    if (isSnapping.current) return;
-    isSnapping.current = true;
+    reportSelection(e.nativeEvent.contentOffset.y);
+  };
 
-    const rawIndex = e.nativeEvent.contentOffset.y / ITEM_HEIGHT;
-    const index = Math.max(0, Math.min(ages.length - 1, Math.round(rawIndex)));
-
-    scrollViewRef.current?.scrollTo({
-      y: index * ITEM_HEIGHT,
-      animated: true,
-    });
-
-    onChange?.(ages[index]);
-
-    // unlock after snap finishes
-    setTimeout(() => {
-      isSnapping.current = false;
-    }, 150);
+  const handleScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    reportSelection(e.nativeEvent.contentOffset.y);
   };
 
   return (
@@ -268,14 +267,17 @@ const AgeWheelPicker: React.FC<AgeWheelPickerProps> = ({ value, onChange }) => {
         <Animated.ScrollView
           ref={scrollViewRef}
           showsVerticalScrollIndicator={false}
-          snapToInterval={ITEM_HEIGHT}
-          decelerationRate="fast"
+          snapToOffsets={ages.map((_, i) => i * ITEM_HEIGHT)}
+          decelerationRate="normal"
+          bounces={false}
+          overScrollMode="never"
           onMomentumScrollEnd={handleMomentumScrollEnd}
+          onScrollEndDrag={handleScrollEndDrag}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true },
           )}
-          scrollEventThrottle={16}
+          scrollEventThrottle={1}
           contentContainerStyle={{
             paddingVertical: ITEM_HEIGHT * 3,
             alignItems: "center",

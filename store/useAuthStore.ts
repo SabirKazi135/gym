@@ -48,11 +48,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       throw new Error("All fields required");
     }
 
-    const existing = await AsyncStorage.getItem(REGISTERED_USER_KEY);
-    if (existing) {
-      throw new Error("Account already exists. Please login.");
-    }
-
+    // Allow overwrite — AsyncStorage persists on native, so a previous signup
+    // would block new signups. For demo/mock auth we let signup proceed.
     const newUser = {
       email,
       password, // ⚠️ learning only

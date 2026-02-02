@@ -23,12 +23,11 @@ export default function SplashScreen() {
     textOpacity.value = withDelay(1300, withTiming(1, { duration: 600 }));
 
     const timer = setTimeout(() => {
-  router.replace("/(auth)/onboarding");
-}, 2000);
+      router.replace("/(auth)/onboarding");
+    }, 2000);
 
-return () => clearTimeout(timer);
-
-  }, []);
+    return () => clearTimeout(timer);
+  }, [logoScale, textOpacity]);
 
   const logoStyle = useAnimatedStyle(() => ({
     transform: [{ scale: logoScale.value }],

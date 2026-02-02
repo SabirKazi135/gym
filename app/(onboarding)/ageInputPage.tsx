@@ -21,7 +21,7 @@ const AgeSelector: React.FC = () => {
 
         {/* Picker */}
         {/* Picker */}
-        <View className="h-full  flex-[] w-full justify-center items-center">
+        <View className="h-full flex-1 w-full justify-center items-center">
           <AgeWheelPicker value={age} onChange={setAge} />
         </View>
 
@@ -31,13 +31,13 @@ const AgeSelector: React.FC = () => {
             width="half"
             title="back"
             rounded="full"
-            to="/(auth)/genderInputPage"
+            to="/(onboarding)/userDetails1"
           />
           <NavButton
             width="half"
             title="continue"
             rounded="full"
-            to="/(auth)/heightInputPage"
+            to="/(onboarding)/heightInputPage"
           />
         </View>
       </View>

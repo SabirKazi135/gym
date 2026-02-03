@@ -44,7 +44,8 @@ export default function Onboarding() {
             training.
           </Text>
 
-          <NavButton title="Get Started" to="/(auth)/welcome" />
+          {/* <NavButton title="Get Started" to="/(auth)/welcome" /> */}
+          <NavButton title="Get Started" to="/(onboarding)/ageInputPage" />
         </View>
       </View>
     </SafeAreaView>

@@ -1,12 +1,12 @@
 import NavButton from "@/components/onboarding/NavButton";
 import React from "react";
-import AgeWheelPicker from "@/components/onboarding/WheelPicker2";
+import WeightWheelPicker from "@/components/onboarding/WheelPicker2";
 
 import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WeightInputPage() {
-  const [weight, setWeight] = React.useState(32);
+  const [weight, setWeight] = React.useState(70);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -19,7 +19,7 @@ export default function WeightInputPage() {
         </Text>
 
         <View className="h-full flex-1 w-full justify-center items-center">
-          <AgeWheelPicker value={weight} onChange={setWeight} />
+          <WeightWheelPicker value={weight} onChange={setWeight} />
         </View>
 
         <View className="pb-6 pt-4 flex-row justify-center gap-4">

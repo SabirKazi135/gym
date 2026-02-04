@@ -13,7 +13,7 @@ type WheelPicker2Props = {
   onChange?: (value: number) => void;
 };
 
-const ITEM_WIDTH = 80;
+const ITEM_WIDTH = 100;
 const VISIBLE_ITEMS = 5;
 const SELECTED_SCALE = 1.0;
 
@@ -100,7 +100,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToOffsets={weights.map((_, i) => i * ITEM_WIDTH)}
-          decelerationRate="fast"
+          decelerationRate="normal"
           bounces={false}
           overScrollMode="never"
           onMomentumScrollEnd={handleMomentumScrollEnd}
@@ -109,12 +109,12 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: true },
           )}
-          scrollEventThrottle={16}
+          scrollEventThrottle={1}
           contentContainerStyle={{
             paddingHorizontal: ITEM_WIDTH * 2,
             alignItems: "center",
           }}
-          style={{ width: ITEM_WIDTH * VISIBLE_ITEMS }}
+          style={{ width: ITEM_WIDTH * VISIBLE_ITEMS, height: 100 }}
         >
           {weights.map((weight, index) => {
             const inputRange = [
@@ -137,17 +137,6 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
               extrapolate: "clamp",
             });
 
-            // Color interpolation for center item
-            const isCenter = scrollX.interpolate({
-              inputRange: [
-                (index - 0.5) * ITEM_WIDTH,
-                index * ITEM_WIDTH,
-                (index + 0.5) * ITEM_WIDTH,
-              ],
-              outputRange: [0, 1, 0],
-              extrapolate: "clamp",
-            });
-
             return (
               <TouchableOpacity
                 key={weight}
@@ -162,6 +151,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
                 style={{ width: ITEM_WIDTH, height: 100 }}
               >
                 <Animated.Text
+                  numberOfLines={1}
                   style={{
                     fontSize: 56,
                     fontWeight: "700",

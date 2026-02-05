@@ -13,7 +13,7 @@ export default function UserReviewCard({
     location = "Delhi, India"
 }: UserReviewCardProps) {
     return (
-        <View className="bg-white w-[50%] rounded-md p-4 shadow-lg border border-gray-100">
+        <View className="bg-white w-[45%] rounded-md p-4 shadow-lg border border-gray-100">
             <Text className="text-gray-700 font-regular text-sm leading-relaxed mb-4">
             {quote}
             </Text>

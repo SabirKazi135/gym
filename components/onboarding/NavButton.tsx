@@ -41,7 +41,7 @@ export default function NavButton({
       style={customRadiusStyle} // ✅ dynamic px radius
       onPress={handlePress}
     >
-      <Text className="text-white text-[17px] font-bold">{title}</Text>
+      <Text className="text-white text-[17px] font-semibold">{title}</Text>
     </Pressable>
   );
 }

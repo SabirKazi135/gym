@@ -1,11 +1,11 @@
 import NavButton from "@/components/onboarding/NavButton";
-import AgeWheelPicker from "@/components/onboarding/WheelPicker";
+import {AgeWheelPicker} from "@/components/onboarding/WheelPicker";
 import React from "react";
 import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AgeSelector: React.FC = () => {
-  const [age, setAge] = React.useState(32);
+  const [age, setAge] = React.useState(18);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -14,9 +14,9 @@ const AgeSelector: React.FC = () => {
       {/* Content */}
       <View className="flex-1  p-6">
         {/* Title */}
-        <Text className="text-[28px] font-bold  text-center mt-6 mb-12">
-          <Text className="text-gray-900">Select Your </Text>
-          <Text className="text-orange-500">Age</Text>
+        <Text className="text-[28px] font-semibold text-center mt-6 mb-12">
+          Select Your 
+          <Text className="text-primary"> Age</Text>
         </Text>
 
         {/* Picker */}
@@ -29,13 +29,13 @@ const AgeSelector: React.FC = () => {
         <View className="pb-6 pt-4  flex-row justify-center gap-4">
           <NavButton
             width="half"
-            title="back"
+            title="Back"
             rounded="full"
             to="/(onboarding)/userDetails1"
           />
           <NavButton
             width="half"
-            title="continue"
+            title="Continue"
             rounded="full"
             to="/(onboarding)/heightInputPage"
           />

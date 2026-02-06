@@ -50,11 +50,11 @@ export default function SplashScreen() {
 
 
         <Animated.View style={textStyle}>
-          <Text className="mt-5 text-[30px] text-center font-bold text-black">
+          <Text className="mt-5 text-3xl text-center font-semibold text-black">
             WEAVFIT
           </Text>
 
-          <Text className="mt-1 text-[22px] text-center text-gray-500">
+          <Text className="mt-1 text-xl font-regular text-center text-gray-500">
             Weaving Fitness Into Life
           </Text>
         </Animated.View>

@@ -107,8 +107,8 @@ function Wheel({
             ],
           }}
         >
-          <View className="h-[2px] bg-orange-500" />
-          <View className="h-[2px] bg-orange-500" />
+          <View className="h-[2px] rounded-lg bg-orange-500" />
+          <View className="h-[2px] rounded-lg bg-orange-500" />
         </View>
 
         <Animated.ScrollView

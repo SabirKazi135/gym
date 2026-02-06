@@ -19,14 +19,14 @@ export default function SignIn() {
   const enterGuestMode = useAuthStore((s) => s.enterGuestMode);
 
   const handleSignup = async () => {
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   setError("Passwords do not match");
+    //   return;
+    // }
 
     try {
       setError(null);
-      await signup({ firstName, lastName, email, password });
+      // await signup({ firstName, lastName, email, password });
       router.replace("/(onboarding)/userDetails1");
     } catch (err: any) {
       setError(err?.message ?? "Signup failed");

@@ -35,7 +35,7 @@ export default function Onboarding() {
 
         {/* 📝 TEXT + BUTTON SECTION */}
         <View className="flex-1 items-center w-[94%] mt-3">
-          <Text className="text-[26px] font-bold text-black text-center">
+          <Text className="text-[26px] font-semibold text-black text-center">
             Transform in 100 Days
           </Text>
 

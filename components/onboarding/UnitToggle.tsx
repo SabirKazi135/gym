@@ -23,7 +23,7 @@ export default function UnitToggle({
   const translateX = useSharedValue(isLeft ? 0 : 68);
 
   useEffect(() => {
-    translateX.value = withTiming(isLeft ? 0 : 68, {
+    translateX.value = withTiming(isLeft ? 5 : 60, {
       duration: 300,
     });
   }, [isLeft]);
@@ -35,19 +35,19 @@ export default function UnitToggle({
   return (
     <Pressable
       onPress={() => onChange(isLeft ? rightLabel : leftLabel)}
-      className="w-[142px] h-[40px] rounded-full bg-gray-100
-                 shadow shadow-black/10 flex-row items-center px-[5px]"
+      className="w-[35%] h-[40px] rounded-full bg-background
+                 shadow-lg shadow-black flex-row items-center px-[5px]"
     >
       {/* Slider */}
       <Animated.View
         style={sliderStyle}
-        className="absolute left-[5px] w-[64px] h-[40px] rounded-full bg-[#E37528]"
+        className="absolute w-[50%] h-[30px] rounded-full bg-[#E37528]"
       />
 
       {/* Left label */}
       <Text
         className={`
-          w-1/2 text-center text-[26px] font-semibold
+          w-1/2 text-center text-2xl font-semibold
           ${isLeft ? "text-white" : "text-[#363636]"}
         `}
       >

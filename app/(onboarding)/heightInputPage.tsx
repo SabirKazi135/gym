@@ -1,6 +1,6 @@
 import NavButton from "@/components/onboarding/NavButton";
 import React from "react";
-import AgeWheelPicker from "@/components/onboarding/WheelPicker";
+import {AgeWheelPicker} from "@/components/onboarding/WheelPicker";
 import UnitToggle from "@/components/onboarding/UnitToggle";
 import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

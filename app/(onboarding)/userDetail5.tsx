@@ -59,6 +59,7 @@ export default function UserDetail5() {
                         <Text className='font-medium'>Enter your workout time </Text>
                         <View className='w-full items-center flex-row'>
                             <TextInput maxLength={2} onPress={() => setOpen(false)} onChangeText={(text) => {
+                                setValue('');
                                 setValue(`${text}.`);
                                 if(text.length === 2) {
                                     input2Ref.current?.focus();

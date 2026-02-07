@@ -18,8 +18,8 @@ const [heightIn, setHeightIn] = React.useState(8);
       <View className="flex-1 p-6">
         <View className="flex justify-center items-center flex-col text-center mt-4 gap-4">
           <View>
-            <Text className="text-gray-900 text-[28px] font-bold">Select Your Present</Text>
-            <Text className="text-orange-500 text-[28px] font-bold text-center">Height</Text>
+            <Text className="text-gray-900 text-center text-[28px] font-semibold">Select Your Present
+            <Text className="text-primary"> Height</Text></Text>
           </View>
           <View>
             <UnitToggle

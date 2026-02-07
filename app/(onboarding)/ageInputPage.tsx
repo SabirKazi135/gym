@@ -37,7 +37,7 @@ const AgeSelector: React.FC = () => {
             width="half"
             title="Continue"
             rounded="full"
-            to="/(onboarding)/heightInputPage"
+            to="/(onboarding)/userFeature1"
           />
         </View>
       </View>

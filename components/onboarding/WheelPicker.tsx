@@ -7,9 +7,10 @@ import {
   NativeScrollEvent,
   TouchableOpacity,
 } from "react-native";
+import SelectorArrow from "assets/svgs/SelectorArrow.svg";
 
-const ITEM_HEIGHT = 70;
-const VISIBLE_ITEMS = 5;
+const ITEM_HEIGHT = 60;
+const VISIBLE_ITEMS = 7;
 const SELECTED_SCALE = 1.15;
 
 const ages = Array.from({ length: 83 }, (_, i) => i + 18);
@@ -22,6 +23,7 @@ type Props = {
 export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
+  console.log(value)
 
   // ✅ Default start age = 32
   const defaultAge = 32;
@@ -57,9 +59,9 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
   };
 
   return (
-    <View className="items-center overflow-hidden w-[50%] justify-center">
+    <View className="items-center border overflow-hidden w-[100%] justify-center">
       <View
-        className="relative items-center justify-center w-[70%]"
+        className="relative items-center justify-center w-[50%]"
         style={{ height: ITEM_HEIGHT * VISIBLE_ITEMS }}
       >
         {/* Selection Lines */}
@@ -67,8 +69,8 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
           pointerEvents="none"
           className="absolute w-[70%] justify-between z-10"
           style={{
-            height: ITEM_HEIGHT,
-            top: "50%",
+            height: ITEM_HEIGHT * 1.2,
+            top: "49%",
             transform: [{ translateY: -ITEM_HEIGHT / 2 }],
           }}
         >
@@ -77,61 +79,50 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
         </View>
 
         {/* Arrow */}
-        <View
-          pointerEvents="none"
-          className="absolute left-0 z-10"
-          style={{
-            top: "50%",
-            transform: [{ translateY: -8 }],
-            width: 0,
-            height: 0,
-            borderTopWidth: 8,
-            borderBottomWidth: 8,
-            borderLeftWidth: 12,
-            borderTopColor: "transparent",
-            borderBottomColor: "transparent",
-            borderLeftColor: "#f97316",
-          }}
-        />
+        <SelectorArrow style={{position: "absolute", left: 0}} />
 
         {/* Scroll Picker */}
         <Animated.ScrollView
           ref={scrollRef}
           showsVerticalScrollIndicator={false}
-          snapToInterval={ITEM_HEIGHT}
-          decelerationRate="fast"
+          snapToInterval={ITEM_HEIGHT * 4}
+          decelerationRate="normal"
           bounces={false}
           overScrollMode="never"
           onMomentumScrollEnd={handleMomentumEnd}
-          scrollEventThrottle={16}
+          scrollEventThrottle={6}
           contentContainerStyle={{
-            paddingVertical: ITEM_HEIGHT * 2,
+            paddingVertical: ITEM_HEIGHT * 3,
+            paddingHorizontal: 20,
             alignItems: "center",
           }}
+          contentContainerClassName={"border"}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
           )}
-          style={{ height: ITEM_HEIGHT * VISIBLE_ITEMS }}
+          style={{ height: (ITEM_HEIGHT * VISIBLE_ITEMS)}}
         >
           {ages.map((age, index) => {
             const inputRange = [
+              (index - 3) * ITEM_HEIGHT,
               (index - 2) * ITEM_HEIGHT,
               (index - 1) * ITEM_HEIGHT,
               index * ITEM_HEIGHT,
               (index + 1) * ITEM_HEIGHT,
               (index + 2) * ITEM_HEIGHT,
+              (index + 3) * ITEM_HEIGHT,
             ];
 
             const scale = scrollY.interpolate({
               inputRange,
-              outputRange: [0.75, 0.9, SELECTED_SCALE, 0.9, 0.75],
+              outputRange: [0.5, 0.75, 0.9, SELECTED_SCALE * 1.2, 0.9, 0.75, 0.5],
               extrapolate: "clamp",
             });
 
             const opacity = scrollY.interpolate({
               inputRange,
-              outputRange: [0.2, 0.6, 1, 0.6, 0.2],
+              outputRange: [0.2, 0.4, 0.6, 1, 0.6, 0.4, 0.2],
               extrapolate: "clamp",
             });
 
@@ -153,7 +144,7 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
                 }}
               >
                 <Animated.Text
-                  className="text-[44px] font-bold text-gray-800"
+                  className={`text-[44px] font-semibold text-black ${age === value ? "" : ""}`}
                   style={{
                     opacity,
                     transform: [{ scale }],

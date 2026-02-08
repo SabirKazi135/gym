@@ -5,14 +5,14 @@ import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AgeSelector: React.FC = () => {
-  const [age, setAge] = React.useState(18);
+  const [age, setAge] = React.useState(32);
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 py-10 px-6  bg-white">
       <StatusBar barStyle="dark-content" />
 
       {/* Content */}
-      <View className="flex-1  p-6">
+      <View className="flex-1">
         {/* Title */}
         <Text className="text-[28px] font-semibold text-center mt-6 mb-12">
           Select Your 
@@ -21,12 +21,12 @@ const AgeSelector: React.FC = () => {
 
         {/* Picker */}
         {/* Picker */}
-        <View className="h-full flex-1 w-full justify-center items-center">
+        <View className="h-full border flex-1 w-full justify-center items-center">
           <AgeWheelPicker value={age} onChange={setAge} />
         </View>
 
         {/* Buttons */}
-        <View className="pb-6 pt-4  flex-row justify-center gap-4">
+        <View className=" flex-row justify-center gap-4">
           <NavButton
             width="half"
             title="Back"

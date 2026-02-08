@@ -11,7 +11,6 @@ export default function UserDetail5() {
   const [value, setValue] = useState('Select an option');
   const input2Ref = useRef<TextInput>(null);
   const [ampm, setAmpm] = useState<'am' | 'pm'>('am');
-  console.log(value);
 
   const options = ["6.00 AM - Morning", "7.00 AM - Morning", "8.00 AM - Morning", "6.00 PM - Evening", "7.00 PM - Evening", "8.00 PM - Evening"];
     return (

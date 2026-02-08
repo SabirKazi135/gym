@@ -19,14 +19,14 @@ export default function SignIn() {
   const enterGuestMode = useAuthStore((s) => s.enterGuestMode);
 
   const handleSignup = async () => {
-    // if (password !== confirmPassword) {
-    //   setError("Passwords do not match");
-    //   return;
-    // }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     try {
       setError(null);
-      // await signup({ firstName, lastName, email, password });
+      await signup({ firstName, lastName, email, password });
       router.replace("/(onboarding)/userDetails1");
     } catch (err: any) {
       setError(err?.message ?? "Signup failed");
@@ -122,7 +122,7 @@ export default function SignIn() {
               }}
             />
 
-            <NavButton title="Signin" onPress={handleSignup} rounded={5} />
+            <NavButton title="Sign Up" onPress={handleSignup} rounded={5} />
 
             {/* ❌ INLINE ERROR MESSAGE */}
             {error && (
@@ -133,11 +133,11 @@ export default function SignIn() {
           </View>
 
           <View className="mt-4 flex-row justify-center">
-            <Text className="text-black text-[15px] font-light">
+            <Text className="text-black text-md font-regular">
               Already an account?{" "}
             </Text>
             <Pressable onPress={() => router.push("/(auth)/login")}>
-              <Text className="text-[#E37528] text-[15px] font-semibold">
+              <Text className="text-[#E37528] text-md underline font-regular">
                 Login
               </Text>
             </Pressable>

@@ -23,7 +23,6 @@ type Props = {
 export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
-  console.log(value)
 
   // ✅ Default start age = 32
   const defaultAge = 32;
@@ -59,7 +58,7 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
   };
 
   return (
-    <View className="items-center border overflow-hidden w-[100%] justify-center">
+    <View className="items-center overflow-hidden w-[100%] justify-center">
       <View
         className="relative items-center justify-center w-[50%]"
         style={{ height: ITEM_HEIGHT * VISIBLE_ITEMS }}
@@ -85,7 +84,7 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
         <Animated.ScrollView
           ref={scrollRef}
           showsVerticalScrollIndicator={false}
-          snapToInterval={ITEM_HEIGHT * 4}
+          snapToInterval={ITEM_HEIGHT}
           decelerationRate="normal"
           bounces={false}
           overScrollMode="never"
@@ -96,7 +95,7 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
             paddingHorizontal: 20,
             alignItems: "center",
           }}
-          contentContainerClassName={"border"}
+          contentContainerClassName={""}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
@@ -116,7 +115,7 @@ export const AgeWheelPicker: React.FC<Props> = ({ value, onChange }) => {
 
             const scale = scrollY.interpolate({
               inputRange,
-              outputRange: [0.5, 0.75, 0.9, SELECTED_SCALE * 1.2, 0.9, 0.75, 0.5],
+              outputRange: [0.5, 0.75, 0.9, SELECTED_SCALE * 1.4, 0.9, 0.75, 0.5],
               extrapolate: "clamp",
             });
 

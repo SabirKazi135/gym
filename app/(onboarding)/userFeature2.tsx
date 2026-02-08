@@ -2,6 +2,7 @@ import {View , Text, Image} from 'react-native';
 import NavButton from '@/components/onboarding/NavButton';
 import UserFeatureImage from '@/components/onboarding/UserFeatureImage';
 import { router } from "expo-router";
+import Tick from "assets/svgs/Tick.svg"
 
 export default function UserFeature2() {
     const image = require('../../assets/images/userfeature_2.png');
@@ -19,11 +20,11 @@ export default function UserFeature2() {
                     <View className='bg-light_red p-4 rounded-md'>
                         <View className='flex-row justify-between items-center'>
                             <Text className='font-medium text-sm'>•  Stretching and Exercise (1-30 min)</Text>
-                            <Image source={require("../../assets/images/Tick.png")} />
+                            <Tick />
                         </View>
                         <View className='flex-row justify-between items-center'>
                             <Text className='font-medium text-sm'>•  Relax & Meditate (10 min) </Text>
-                            <Image source={require("../../assets/images/Tick.png")} />
+                            <Tick />
                         </View>
                     </View>
                  </View>

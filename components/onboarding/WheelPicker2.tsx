@@ -7,13 +7,14 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from "react-native";
+import SelectorArrow from "assets/svgs/SelectorArrow.svg"
 
 type WheelPicker2Props = {
   value: number;
   onChange?: (value: number) => void;
 };
 
-const ITEM_WIDTH = 100;
+const ITEM_WIDTH = 90;
 const VISIBLE_ITEMS = 5;
 const SELECTED_SCALE = 1.0;
 
@@ -57,7 +58,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
   };
 
   return (
-    <View className="items-center w-full justify-center py-8">
+    <View className="items-center w-full justify-center py-4">
       <View
         className="relative items-center justify-center"
         style={{ width: ITEM_WIDTH * VISIBLE_ITEMS, height: 120 }}
@@ -65,7 +66,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
         {/* Selection Indicator Lines - Vertical bars on both sides */}
         <View
           pointerEvents="none"
-          className="absolute h-[100px] justify-between z-10"
+          className="absolute rounded-md h-[70px] justify-between z-10"
           style={{
             width: ITEM_WIDTH,
             left: "50%",
@@ -77,7 +78,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
         </View>
 
         {/* Top Arrow Indicator */}
-        <View
+        {/* <View
           pointerEvents="none"
           className="absolute bottom-0 z-10"
           style={{
@@ -91,8 +92,9 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
             borderLeftColor: "transparent",
             borderRightColor: "transparent",
             borderBottomColor: "#f97316",
-          }}
-        />
+          }} */}
+          <SelectorArrow style={{ position: "absolute", bottom: 0, transform: [{rotate: '270deg'}] }} />
+        {/* /> */}
 
         {/* Horizontal Scroll */}
         <Animated.ScrollView
@@ -113,6 +115,7 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
           contentContainerStyle={{
             paddingHorizontal: ITEM_WIDTH * 2,
             alignItems: "center",
+            justifyContent: "center",
           }}
           style={{ width: ITEM_WIDTH * VISIBLE_ITEMS, height: 100 }}
         >
@@ -153,12 +156,10 @@ const WheelPicker2: React.FC<WheelPicker2Props> = ({ value, onChange }) => {
                 <Animated.Text
                   numberOfLines={1}
                   style={{
-                    fontSize: 56,
-                    fontWeight: "700",
                     opacity,
                     transform: [{ scale }],
-                    color: "#1f2937", // gray-800
                   }}
+                  className={"font-semibold text-[54px] text-black"}
                 >
                   {weight}
                 </Animated.Text>

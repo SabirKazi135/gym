@@ -1,7 +1,8 @@
+import { router } from "expo-router";
 import NavButton from "@/components/onboarding/NavButton";
 import {AgeWheelPicker} from "@/components/onboarding/WheelPicker";
 import React from "react";
-import { View, Text, StatusBar } from "react-native";
+import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AgeSelector: React.FC = () => {
@@ -9,8 +10,6 @@ const AgeSelector: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 py-10 px-6  bg-white">
-      <StatusBar barStyle="dark-content" />
-
       {/* Content */}
       <View className="flex-1">
         {/* Title */}
@@ -21,7 +20,7 @@ const AgeSelector: React.FC = () => {
 
         {/* Picker */}
         {/* Picker */}
-        <View className="h-full border flex-1 w-full justify-center items-center">
+        <View className="h-full flex-1 w-full justify-center items-center">
           <AgeWheelPicker value={age} onChange={setAge} />
         </View>
 
@@ -31,7 +30,7 @@ const AgeSelector: React.FC = () => {
             width="half"
             title="Back"
             rounded="full"
-            to="/(onboarding)/userDetails1"
+            onPress={() => router.back()}
           />
           <NavButton
             width="half"

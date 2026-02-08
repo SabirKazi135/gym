@@ -47,7 +47,7 @@ export default function UnitToggle({
       {/* Left label */}
       <Text
         className={`
-          w-1/2 text-center text-2xl font-semibold
+          w-1/2 text-center text-[24px] font-semibold
           ${isLeft ? "text-white" : "text-[#363636]"}
         `}
       >
@@ -57,7 +57,7 @@ export default function UnitToggle({
       {/* Right label */}
       <Text
         className={`
-          w-1/2 text-center text-[26px] font-semibold
+          w-1/2 text-center text-[24px] font-semibold
           ${!isLeft ? "text-white" : "text-[#363636]"}
         `}
       >

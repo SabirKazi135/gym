@@ -8,6 +8,7 @@ type NavButtonProps = {
 
   rounded?: "md" | "full" | number; // ✅ allow number (px)
   width?: "full" | "half";
+  active?: boolean;
 };
 
 export default function NavButton({
@@ -16,10 +17,11 @@ export default function NavButton({
   onPress,
   rounded = "md",
   width = "full",
+  active = true,
 }: NavButtonProps) {
   const handlePress = () => {
     if (onPress) return onPress();
-    if (to) router.push(to as any);
+    if (to && active) router.push(to as any);
   };
 
   const widthClass = width === "half" ? "w-[47%]" : "w-full";
@@ -37,7 +39,7 @@ export default function NavButton({
 
   return (
     <Pressable
-      className={`bg-primary h-[52px] items-center justify-center ${widthClass} ${radiusClass}`}
+      className={`${active ? "bg-primary" : "bg-primary_light"} h-[52px] items-center justify-center ${widthClass} ${radiusClass}`}
       style={customRadiusStyle} // ✅ dynamic px radius
       onPress={handlePress}
     >

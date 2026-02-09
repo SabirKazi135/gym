@@ -2,6 +2,7 @@ import NavButton from "@/components/onboarding/NavButton";
 import React from "react";
 import WeightWheelPicker from "@/components/onboarding/WheelPicker2";
 import UnitToggle from "@/components/onboarding/UnitToggle";
+import {router} from "expo-router"
 
 import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -29,21 +30,19 @@ export default function WeightInputPage() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-background">
       <StatusBar barStyle="dark-content" />
 
       <View className="flex-1 p-6">
         {/* Title */}
         <View className="flex items-center mt-4 gap-4">
-          <View>
-            <Text className="text-gray-900 text-[28px] font-bold text-center">
-              Select Your Present
+          
+            <Text className="text-2xl font-semibold text-center">
+              What&apos;s Your Present <Text className="text-primary">
+               Weight
             </Text>
-            <Text className="text-orange-500 text-[28px] font-bold text-center">
-              Weight
             </Text>
-          </View>
-
+          
           {/* Unit toggle */}
           <UnitToggle
             leftLabel="kg"
@@ -60,20 +59,28 @@ export default function WeightInputPage() {
             onChange={handleWeightChange}
           />
         </View>
+        <View className="bg-light_red p-4 mb-6 rounded-md">
+          <Text className="font-semibold text-lg text-black">Your BMI Result :</Text>
+          <View className="flex-row items-end gap-2">
+            <Text className="font-semibold text-3xl text-primary">22.5</Text>
+            <Text className="font-regular text-xs mb-3">which falls in the <Text className="font-semibold">Healthy Range.</Text></Text>
+          </View>
+          <Text className="font-regular text-sm">Keep maintaining balance with exercise, diet, and relaxation.</Text>
+        </View>
 
         {/* Navigation */}
         <View className="pb-6 pt-4 flex-row justify-center gap-4">
           <NavButton
             width="half"
-            title="back"
+            title="Back"
             rounded="full"
-            to="/(onboarding)/heightInputPage"
+            onPress={() => router.back()}
           />
           <NavButton
             width="half"
-            title="continue"
+            title="Continue"
             rounded="full"
-            to="/(main)/home"
+            to="/(onboarding)/userFeature2"
           />
         </View>
       </View>

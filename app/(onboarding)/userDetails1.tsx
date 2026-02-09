@@ -21,7 +21,7 @@ export default function UserDetails1() {
                 <GenderSelector gender="Female" image={femaleImage} varient="default" active={selectedGender === "female"} onSelect={setSelectedGender} />
                 <GenderSelector gender="Other" image={otherImage} varient="v2" active={selectedGender === "other"} onSelect={setSelectedGender} />
             </View>
-            <NavButton title="Continue" to="/(onboarding)/ageInputPage" width="full" rounded="full" />
+            <NavButton title="Continue" to="/(onboarding)/userDetails2" width="full" rounded="full" active={selectedGender !== null} />
         </View>
     );
 }

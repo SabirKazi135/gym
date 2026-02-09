@@ -17,13 +17,13 @@ export default function Welcome() {
             style={{ width: 300, height: 300 }}
           />
         </View>
-        <View className="flex-[10] gap- flex justify-center items-center rounded-t-[25] px-5 bg-[#F2C6A7] w-full ">
-          <View className=" gap-3 justify-center flex">
-            <Text className="text-xl text-center font-regular">Welcome to</Text>
-            <Text className="text-center text-[26px] font-semibold">
+        <View className="flex-[10] gap-1 flex justify-center items-center rounded-t-[25] px-5 bg-[#F2C6A7] w-full ">
+          <View className=" gap-1 justify-center flex">
+            <Text className="text-lg text-center text-black font-regular">Welcome to</Text>
+            <Text className="text-center text-2xl font-semibold text-black">
               Weavfit Fitness
             </Text>
-            <Text className="text-center font-light text-lg">
+            <Text className="text-center text-black font-light text-md">
               Where daily and community support drive positive and ever lasting
               behaviour change
             </Text>

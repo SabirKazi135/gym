@@ -18,11 +18,11 @@ export default function UserFeature8() {
                     </View>
                     <View className='items-center gap-2'>
                         <Text className="font-regular text-center text-sm">Our app doesn’t give you diet plans. Instead, we make healthy eating simple and practical with easy swaps you can follow every day.</Text>
-                        <View className='bg-light_red p-4 gap-2 rounded-md'>
+                        <View className='bg-light_red p-4 gap-1 rounded-md'>
                             <View className='flex-row justify-between items-center'>
                                 <Text className='font-semibold text-sm'>Simple Swaps You Can Try:</Text>
                             </View>
-                            <View className='justify-between pl-2 items-center'>
+                            <View className='justify-between pl-2 gap-1 items-center'>
                                 <View className='flex-row'>
                                     <Text className='text-xs'>•  </Text>
                                 <Text className='font-medium text-xs'>Cold Drinks → <Text className='font-semibold'>Water / Juice</Text> Hydrate naturally and skip the empty calories.</Text>
@@ -43,9 +43,8 @@ export default function UserFeature8() {
              </View>
 
             <View className='w-full px-4 flex-row justify-between'>
-                    {/* <LinearGradient colors={["transparent", "rgba(0,0,0,0.15)"]} style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 24, zIndex: 1}} /> */}
                 <NavButton title="Back" onPress={() => router.back()} width="half" rounded="full" />
-                <NavButton title="Continue" to="/(onboarding)/userFeature9" width="half" rounded="full" />
+                <NavButton title="Continue" to="/(onboarding)/userDetail5" width="half" rounded="full" />
             </View>
         </ScrollView>
     );

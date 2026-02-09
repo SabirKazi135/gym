@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import {Image} from 'expo-image';
 import UserReviewCard from '@/components/onboarding/UserReviewCard';
 import NavButton from '@/components/onboarding/NavButton';
+import Star from "assets/svgs/Star.svg"
 
 
 export default function userPremiumPlans(){
@@ -25,11 +26,11 @@ export default function userPremiumPlans(){
             </View>
             <View className='my-8 px-6 items-center'>
                 <View className='flex-row pb-5 justify-center gap-2'>
-                    <Image source={require('assets/images/rating-star.png')} style={{width: 24, height: 24}}/>
-                    <Image source={require('assets/images/rating-star.png')} style={{width: 24, height: 24}}/>
-                    <Image source={require('assets/images/rating-star.png')} style={{width: 24, height: 24}}/>
-                    <Image source={require('assets/images/rating-star.png')} style={{width: 24, height: 24}}/>
-                    <Image source={require('assets/images/rating-star.png')} style={{width: 24, height: 24}}/>
+                    <Star/>
+                    <Star/>
+                    <Star/>
+                    <Star/>
+                    <Star/>
                 </View>
                 <Text className='font-semibold text-xl pb-4'>Discover Your <Text className='font-semibold text-primary'>Fitness</Text> Plan!</Text>
                 <View className='w-full gap-2 pb-4'>

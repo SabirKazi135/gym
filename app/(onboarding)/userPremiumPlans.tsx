@@ -33,7 +33,7 @@ export default function userPremiumPlans(){
 
 
     return(
-        <ScrollView contentOffset={{ x: 0, y: 9999 }} className='mt-8 w-full'>
+        <ScrollView showsVerticalScrollIndicator={false} className='mt-8 w-full'>
             
             <View className="w-full">
                 <Image source={require("assets/images/userPremium_picture3.png")} contentFit="cover" className='' style={{width: 385, height: 300}}/>

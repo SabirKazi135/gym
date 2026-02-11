@@ -23,7 +23,7 @@ export default function SplashScreen() {
     textOpacity.value = withDelay(1300, withTiming(1, { duration: 600 }));
 
     const timer = setTimeout(() => {
-      router.replace("/(auth)/onboarding");
+      router.replace("/(onboarding)/userPremiumPlans");
     }, 2000);
 
     return () => clearTimeout(timer);

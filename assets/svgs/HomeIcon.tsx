@@ -1,0 +1,38 @@
+import Svg, { Path } from "react-native-svg";
+
+type IconProps = {
+  width?: number;
+  height?: number;
+  color?: string;
+};
+
+export default function HomeIcon({
+  width = 22,
+  height = 22,
+  color = "currentColor",
+}: IconProps) {
+  return (
+    <Svg
+      width={width * 0.8}
+      height={height * 0.8}
+      viewBox="0 0 18 20"
+      fill="none"
+    >
+      <Path
+        d="M2.883 18.7503C1.705 18.7503 0.75 17.7703 0.75 16.5603V7.75828C0.75 7.09328 1.045 6.46328 1.55 6.04828L7.417 1.23028C7.79186 0.919859 8.2633 0.75 8.75 0.75C9.2367 0.75 9.70814 0.919859 10.083 1.23028L15.949 6.04828C16.455 6.46328 16.75 7.09328 16.75 7.75828V16.5603C16.75 17.7703 15.795 18.7503 14.617 18.7503H2.883Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <Path
+        d="M6.25 18.75V13.25C6.25 12.7196 6.46071 12.2109 6.83579 11.8358C7.21086 11.4607 7.71957 11.25 8.25 11.25H9.25C9.78043 11.25 10.2891 11.4607 10.6642 11.8358C11.0393 12.2109 11.25 12.7196 11.25 13.25V18.75"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}

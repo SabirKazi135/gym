@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       setError(null); // clear previous error
-      await login(email, password);
+      // await login(email, password);
       router.replace("/(main)/home");
     } catch (err: any) {
       setError(err?.message ?? "Login failed");

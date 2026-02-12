@@ -1,6 +1,8 @@
 import { Text, Button, View } from "react-native";
 import { useAuthStore } from "@/store/useAuthStore";
 import { router } from "expo-router";
+import HomeIcon from "assets/svgs/HomeIcon.svg";
+
 
 export default function Home() {
   const { user, isAuthenticated, isGuest, logout } = useAuthStore();
@@ -18,6 +20,7 @@ export default function Home() {
       <Text>Welcome {isGuest ? "Guest" : user?.name}</Text>
 
       <Button title="Logout" onPress={handleLogout} />
+      <HomeIcon width={100} height={100} stroke="#505050" />
     </View>
   );
 }

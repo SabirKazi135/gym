@@ -1,0 +1,51 @@
+import Svg, { Path } from "react-native-svg";
+
+type IconProps = {
+  width?: number;
+  height?: number;
+  color?: string;
+};
+
+export default function DietIcon({
+  width = 22,
+  height = 22,
+  color = "currentColor",
+}: IconProps) {
+  return (
+    <Svg
+      width={width * 0.8}
+      height={height * 0.8}
+      viewBox="0 0 18 20"
+      fill="none"
+    >
+      <Path
+        d="M8.88649 16.7555C2.00631 16.7555 -0.166835 14.6162 1.08628 10.7476H16.6867C17.9398 14.6162 15.7667 16.7555 8.88649 16.7555Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M5.38281 5.41553C6.77167 7.20658 7.26311 9.01147 7.46044 10.7133"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M1.78401 10.7395C1.02988 9.13696 1.26869 7.28808 2.31567 6.37433C2.15153 6.1456 2.0085 5.90245 1.88833 5.64785C1.01103 3.78515 1.51755 1.70124 3.01953 0.992358C4.52527 0.283477 6.45584 1.2186 7.33315 3.0813C7.45548 3.34357 7.55185 3.60751 7.62223 3.87313C8.86906 3.66826 10.2516 4.40856 11.0598 5.74966L11.2948 6.20591"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M9.71054 10.5825H16.3117C16.4148 10.2105 16.4667 9.79653 16.4675 9.3407C16.4675 7.12859 15.2232 5.88428 13.0111 5.88428C10.799 5.88428 9.55469 7.12859 9.55469 9.3407C9.55469 9.79653 9.60664 10.2105 9.71054 10.5825Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}

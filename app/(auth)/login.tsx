@@ -5,6 +5,10 @@ import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAuthStore } from "@/store/useAuthStore";
+import NavButton from "@/components/onboarding/NavButton";
+import GoogleLogo from "assets/svgs/GoogleLogo.svg";
+import FacebookLogo from "assets/svgs/FacebookLogo.svg";
+import AppleLogo from "assets/svgs/AppleLogo.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,7 +22,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       setError(null); // clear previous error
-      // await login(email, password);
+      await login(email, password);
       router.replace("/(main)/home");
     } catch (err: any) {
       setError(err?.message ?? "Login failed");
@@ -48,8 +52,8 @@ export default function Login() {
         </View>
 
         {/* Title */}
-        <View className="flex-[1] justify-end pb-[52px] gap-2">
-          <Text className="text-[30px] font-bold">Login</Text>
+        <View className="flex-[1] justify-end pb-[52px]">
+          <Text className="text-[30px] font-mbold">Login</Text>
           <Text className="text-[14px] font-light w-[85%]">
             Welcome back! Log in to continue your fitness journey with us.
           </Text>
@@ -97,17 +101,13 @@ export default function Login() {
                 )}
               </View>
 
-              <Text
-                className={`text-[13px] font-light ${
-                  checked ? "text-black" : "text-gray-500"
-                }`}
-              >
+              <Text className="text-sm font-regular text-black">
                 Remember Me
               </Text>
             </Pressable>
 
             <Pressable>
-              <Text className="text-[13px] text-gray-600 underline">
+              <Text className="text-sm font-regular text-gray-600 underline">
                 Forget Password?
               </Text>
             </Pressable>
@@ -115,12 +115,7 @@ export default function Login() {
 
           {/* Login Button */}
           <View className="mt-4">
-            <Pressable
-              onPress={handleLogin}
-              className="bg-orange-500 h-[52px] items-center justify-center rounded-[5px]"
-            >
-              <Text className="text-white text-[17px] font-bold">Login</Text>
-            </Pressable>
+            <NavButton onPress={handleLogin} rounded={"md"} title="Login"/>
           </View>
           {/* ❌ INLINE ERROR MESSAGE */}
           {error && (
@@ -131,11 +126,11 @@ export default function Login() {
 
           {/* Signup Link */}
           <View className="mt-5 flex-row justify-center">
-            <Text className="text-[15px] text-black font-light">
+            <Text className="text-sm text-black font-regular">
               {"Don't have account? "}
             </Text>
             <Pressable onPress={() => router.push("/(auth)/signin")}>
-              <Text className="text-[#E37528] text-[15px] font-semibold">
+              <Text className="text-primary text-sm underline font-regular">
                 Signup
               </Text>
             </Pressable>
@@ -144,7 +139,7 @@ export default function Login() {
           {/* Divider */}
           <View className="flex-row items-center mt-6">
             <View className="flex-1 h-[1px] bg-gray-300" />
-            <Text className="mx-3 text-[13px] text-black">
+            <Text className="mx-3 font-regular text-sm text-black">
               Or Continue with
             </Text>
             <View className="flex-1 h-[1px] bg-gray-300" />
@@ -153,24 +148,15 @@ export default function Login() {
           {/* Social Login (UI only) */}
           <View className="flex-row justify-center gap-6 mt-5">
             <Pressable className="w-[46px] h-[46px] border border-gray-300 rounded-[10px] items-center justify-center">
-              <Image
-                source={require("../../assets/images/google.png")}
-                className="w-[22px] h-[22px]"
-              />
+              <GoogleLogo />
             </Pressable>
 
             <Pressable className="w-[46px] h-[46px] border border-gray-300 rounded-[10px] items-center justify-center">
-              <Image
-                source={require("../../assets/images/facebook.png")}
-                className="w-[22px] h-[22px]"
-              />
+              <FacebookLogo />
             </Pressable>
 
             <Pressable className="w-[46px] h-[46px] border border-gray-300 rounded-[10px] items-center justify-center">
-              <Image
-                source={require("../../assets/images/apple.png")}
-                className="w-[22px] h-[22px]"
-              />
+              <AppleLogo />
             </Pressable>
           </View>
         </View>

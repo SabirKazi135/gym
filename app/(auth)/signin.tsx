@@ -57,8 +57,8 @@ export default function SignIn() {
           </Pressable>
         </View>
 
-        <View className="flex-[1] justify-end pb-[52px] gap-2">
-          <Text className="text-[30px] font-bold">Signin</Text>
+        <View className="flex-[1] justify-end pb-[52px]">
+          <Text className="text-[30px] font-mbold">Signin</Text>
           <Text className="text-[14px] font-light">
             Create your account now and start exploring amazing features
             instantly.

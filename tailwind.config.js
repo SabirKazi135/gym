@@ -39,7 +39,7 @@ module.exports = {
         regular: ["MontserratRegular"],
         medium: ["MontserratMedium"],
         semibold: ["MontserratSemiBold"],
-        bold: ["MontserratBold"],
+        mbold: ["MontserratBold"],
       },
     },
   },

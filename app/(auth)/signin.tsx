@@ -16,7 +16,6 @@ export default function SignIn() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [error, setError] = useState<string | null>(null);
-  const enterGuestMode = useAuthStore((s) => s.enterGuestMode);
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
@@ -38,27 +37,8 @@ export default function SignIn() {
       <View className="flex-1 px-6 justify-center">
         {/* Title */}
 
-        <View
-          className="absolute top-6 right-[24px]"
-          style={{
-            zIndex: 100, // ✅ iOS + RN
-            elevation: 100, // ✅ Android
-          }}
-        >
-          <Pressable
-            onPress={() => {
-              console.log("SKIP PRESSED");
-
-              enterGuestMode();
-              router.replace("/(main)/home");
-            }}
-          >
-            <Text className="text-[14px] font-light text-gray-500">Skip</Text>
-          </Pressable>
-        </View>
-
         <View className="flex-[1] justify-end pb-[52px]">
-          <Text className="text-[30px] font-mbold">Signin</Text>
+          <Text className="text-[30px] font-mbold">Sign Up</Text>
           <Text className="text-[14px] font-light">
             Create your account now and start exploring amazing features
             instantly.
@@ -133,11 +113,11 @@ export default function SignIn() {
           </View>
 
           <View className="mt-4 flex-row justify-center">
-            <Text className="text-black text-md font-regular">
-              Already an account?{" "}
+            <Text className="text-black text-sm font-regular">
+              Already have account?{" "}
             </Text>
             <Pressable onPress={() => router.push("/(auth)/login")}>
-              <Text className="text-[#E37528] text-md underline font-regular">
+              <Text className="text-[#E37528] text-sm underline font-regular">
                 Login
               </Text>
             </Pressable>

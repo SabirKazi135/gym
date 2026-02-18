@@ -1,7 +1,7 @@
 import AuthInput from "@/components/onboarding/AuthInput";
 import { useState } from "react";
 import { router } from "expo-router";
-import { Image, Pressable, Text, View } from "react-native";
+import {Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -17,7 +17,6 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
 
   const login = useAuthStore((state) => state.login);
-  const enterGuestMode = useAuthStore((s) => s.enterGuestMode);
 
   const handleLogin = async () => {
     try {
@@ -32,25 +31,6 @@ export default function Login() {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 px-6">
-        <View
-          className="absolute top-6 right-[24px]"
-          style={{
-            zIndex: 100, // ✅ iOS + RN
-            elevation: 100, // ✅ Android
-          }}
-        >
-          <Pressable
-            onPress={() => {
-              console.log("SKIP PRESSED");
-
-              enterGuestMode();
-              router.replace("/(main)/home");
-            }}
-          >
-            <Text className="text-[14px] font-light text-gray-500">Skip</Text>
-          </Pressable>
-        </View>
-
         {/* Title */}
         <View className="flex-[1] justify-end pb-[52px]">
           <Text className="text-[30px] font-mbold">Login</Text>
@@ -131,7 +111,7 @@ export default function Login() {
             </Text>
             <Pressable onPress={() => router.push("/(auth)/signin")}>
               <Text className="text-primary text-sm underline font-regular">
-                Signup
+                Sign Up
               </Text>
             </Pressable>
           </View>

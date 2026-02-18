@@ -27,7 +27,6 @@ type AuthState = {
   login: (email: string, password: string) => Promise<void>;
   restoreSession: () => Promise<void>;
   logout: () => Promise<void>;
-  enterGuestMode: () => void;
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -143,18 +142,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       token: null,
       isAuthenticated: false,
       isGuest: false,
-    });
-  },
-
-  // ------------------
-  // ENTER GUEST MODE
-  // ------------------
-  enterGuestMode: () => {
-    set({
-      user: null, // ✅ no real user
-      token: null,
-      isAuthenticated: false,
-      isGuest: true, // ✅ guest identity
     });
   },
 }));

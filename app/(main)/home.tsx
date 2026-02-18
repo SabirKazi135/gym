@@ -36,11 +36,9 @@ export default function Home() {
             </Text>
             <Text className="text-left font-light text-sm text-black">Ready For Your Workout?</Text>
           </View>
-          {isAuthenticated && !isGuest && (
           <Pressable className="bg-primary justify-center rounded-full w-14 h-14 items-center">
             <Text className="text-white font-medium text-lg">V</Text>
           </Pressable>
-          )}
         </View>
         <View className="border mt-8 px-4 rounded-md w-full border-[#E5E5E5]">
           <View className="flex-row gap-2 my-2 items-center">

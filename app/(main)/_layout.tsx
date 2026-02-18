@@ -6,12 +6,13 @@ import GroupsIcon from "assets/svgs/GroupsIcon";
 import DietIcon from "assets/svgs/DietIcon";
 import ProfileIcon from "assets/svgs/ProfileIcon";
 import { StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MainLayout() {
   return (
     <>
     <StatusBar barStyle="dark-content" />
-      
+    <SafeAreaView className="flex-1 bg-background">
     <Tabs screenOptions={
       { headerShown: false,
         tabBarActiveTintColor: "#E37528",
@@ -68,6 +69,7 @@ export default function MainLayout() {
         )
       }} />
     </Tabs>
+    </SafeAreaView>
     </>
   );
 }

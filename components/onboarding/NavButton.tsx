@@ -34,13 +34,13 @@ export default function NavButton({
         ? "rounded-[10px]"
         : "";
 
-  const customRadiusStyle =
+  const customStyle =
     typeof rounded === "number" ? { borderRadius: rounded } : {};
 
   return (
     <Pressable
       className={`${active ? "bg-primary" : "bg-primary_light"} h-[52px] items-center justify-center ${widthClass} ${radiusClass}`}
-      style={customRadiusStyle} // ✅ dynamic px radius
+      style={customStyle} // ✅ dynamic px radius
       onPress={handlePress}
     >
       <Text className="text-white text-[17px] font-semibold">{title}</Text>

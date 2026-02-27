@@ -38,7 +38,7 @@ export default function MainLayout() {
           <HomeIcon width={size} height={size} color={color} />
         ) 
       }} />
-      <Tabs.Screen name="class" options={{
+      <Tabs.Screen name="(class)" options={{
         title: "Class",
         tabBarIcon: ({ color, size }) => (
           <ClassIcon width={size} height={size} color={color} />

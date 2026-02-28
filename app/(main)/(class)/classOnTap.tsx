@@ -16,7 +16,7 @@ export default function ClassScreen() {
     return (
             <View className="px-4 py-6 bg-background h-full">
                 <View className='items-center mt-4'>
-                    <Text className='font-mbold  text-black text-xl'>Ready for Today's Class?</Text>
+                    <Text className='font-mbold  text-black text-xl'>Ready for Today&apos;s Class?</Text>
                     <Text className='font-light mt-[-4] text-black text-sm'>40-minute session with your circle</Text>
                 </View>
                 <View className='justify-center h-[90%]'>

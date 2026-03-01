@@ -2,15 +2,20 @@ import { View, Text, Pressable } from "react-native";
 import { useState } from "react";
 import ArrowDown from 'assets/svgs/class/ArrowDown.svg'
 
-export default function CustomSelector() {
+type Props = {
+  width?: number;
+  borderColor?: string;
+}
+
+export default function CustomSelector({width = 60, borderColor = 'E5E5E5'} : Props) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("Low");
 
   return (
-    <View className="w-[60%] relative">
+    <View className={`w-[${width}%] relative`}>
       <Pressable
         onPress={() => setOpen((prev) => !prev)}
-        className="border border-[#4C1616] px-3 py-2 flex-row justify-between items-center rounded-sm bg-white"
+        className={`border border-[#${borderColor}] px-3 py-2 flex-row justify-between items-center rounded-sm bg-white`}
         style={{ zIndex: 10 }}
       >
         <Text className="font-medium text-sm">{data}</Text>

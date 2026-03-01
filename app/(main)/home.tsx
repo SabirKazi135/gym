@@ -1,4 +1,4 @@
-import { Text, Button, View, Pressable, Image } from "react-native";
+import { Text, View, Pressable, Image } from "react-native";
 import { useAuthStore } from "@/store/useAuthStore";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,11 +13,11 @@ import {BlurView} from "expo-blur";
 
 
 export default function Home() {
-  const { user, isAuthenticated, isGuest, logout } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const handleLogout = async () => {
     await logout();
-    router.replace("/(auth)/login"); // ✅ go to login after logout
+    router.replace("/(auth)/login");
   };
 
   const userFirstName = user?.name?.split(" ")[0] || "";

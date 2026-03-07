@@ -1,16 +1,28 @@
 import { View, Text, Pressable } from "react-native";
 import { useState } from "react";
-import ArrowDown from 'assets/svgs/class/ArrowDown.svg'
+import ArrowDown from 'assets/svgs/class/ArrowDown.svg';
+import { useSettingsStore, BlurLevel } from '@/store/settingsStore';
+import { capitalize } from "@/utils/capitalizer";
 
 type Props = {
   width?: number;
   borderColor?: string;
+  isDefault?: boolean;
 }
 
-export default function CustomSelector({width = 60, borderColor = 'E5E5E5'} : Props) {
+export default function CustomSelector({width = 60, borderColor = 'E5E5E5', isDefault = false} : Props) {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState("Low");
+  const classSettings = useSettingsStore(s => s.classSettings)
+  const [data, setData] = useState<string>(classSettings.defaultBlurLevel);
+  const updateClassSettings = useSettingsStore(s => s.updateClassSettings);
 
+  const blurLevels: BlurLevel[] = [
+  BlurLevel.Low,
+  BlurLevel.Medium,
+  BlurLevel.High,
+  BlurLevel.None
+]
+  
   return (
     <View className={`w-[${width}%] relative`}>
       <Pressable
@@ -18,7 +30,9 @@ export default function CustomSelector({width = 60, borderColor = 'E5E5E5'} : Pr
         className={`border border-[#${borderColor}] px-3 py-2 flex-row justify-between items-center rounded-sm bg-white`}
         style={{ zIndex: 10 }}
       >
-        <Text className="font-medium text-sm">{data}</Text>
+        {isDefault ? <Text className="font-medium text-sm">{capitalize(classSettings.defaultBlurLevel)}</Text> : <Text className="font-medium text-sm">{capitalize(data)}</Text>}
+        
+        
         <ArrowDown />
       </Pressable>
 
@@ -30,18 +44,23 @@ export default function CustomSelector({width = 60, borderColor = 'E5E5E5'} : Pr
             elevation: 20,
           }}
         >
-          {["Low", "Medium", "High"].map((item, index) => (
+          {blurLevels.map((item, index) => (
             <Pressable
               key={item}
               onPress={() => {
-                setData(item);
+                if (isDefault){
+                  updateClassSettings("defaultBlurLevel", item)
+                }
+                else{
+                  setData(item);
+                }
                 setOpen(false);
               }}
               className={`px-3 py-2 ${
-                index !== 2 ? "border-b border-gray-200" : ""
+                index !== 3 ? "border-b border-gray-200" : ""
               }`}
             >
-              <Text className="font-medium">{item}</Text>
+              <Text className="font-medium">{capitalize(item)}</Text>
             </Pressable>
           ))}
         </View>

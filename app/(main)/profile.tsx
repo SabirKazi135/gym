@@ -1,9 +1,9 @@
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable, TextInput, Share } from 'react-native';
 import { useAuthStore } from "@/store/useAuthStore";
 import StreakFlame from 'assets/svgs/profile/StreakFlame.svg';
 import ClassSettingsIcon from 'assets/svgs/profile/ClassSettingsIcon.svg';
 import Clock from 'assets/svgs/profile/Clock.svg';
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import BlurSelector from 'components/main/class/BlurSelector';
 import Bell from 'assets/svgs/profile/Bell.svg';
 import Gift from 'assets/svgs/profile/Gift.svg';
@@ -14,22 +14,73 @@ import QuestionMark from 'assets/svgs/profile/QuestionMark.svg';
 import Shield from 'assets/svgs/profile/Shield.svg';
 import Logout from 'assets/svgs/profile/Logout.svg';
 import {router} from 'expo-router';
+import { useSettingsStore } from '@/store/settingsStore';
+import ToggleSwitch from '@/components/main/ToggleSwitch';
+import AppModal from '@/components/main/Modal';
+import { AMPMPicker } from '../(onboarding)/userDetail5';
+
+type NotificationKeys = "streakUpdates" | "groupMessages" | "classReminders" | "weeklyProgress"
 
 export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogout = async () => {
       await logout();
       router.replace("/(auth)/login");
     };
 
-  const [autoJoinClass, setAutoJoinClass] = useState(true);
-  const [classReminder, setClassReminder] = useState(true);
-  const [streakUpdates, setStreakUpdates] = useState(false);
-  const [groupMessages, setGroupMessages] = useState(true);
-  const [weeklyPrograms, setWeeklyPrograms] = useState(true);
+    const handleInviteFriends = async () => {
+        try{
+            await Share.share({
+                message: "Join me on Weavfit! Download the app here: https://yourapp.link/demo-link"
+            })
+        }catch(err){
+            console.error(err)
+        }
+    }
+
+    const notifications = useSettingsStore(s => s.notifications)
+    const classSettings = useSettingsStore(s => s.classSettings)
+    const updateClassSettings = useSettingsStore(s => s.updateClassSettings)
+    const updateNotificationSettings = useSettingsStore(s => s.updateNotificationSettings)
+
+    const [value, setValue] = useState('');
+    const [ampm, setAmpm] = useState<'am' | 'pm'>('am');
+    const input1Ref = useRef<TextInput>(null);
+    const input2Ref = useRef<TextInput>(null);
+    
+    const slotFormatted =  classSettings.preferredTimeSlot.split(":")[0]+ " : "+ classSettings.preferredTimeSlot.split(":")[1]
+
+    const handleWorkoutTimeUpdate = () => {
+        updateClassSettings("preferredTimeSlot", value);
+        input1Ref.current?.clear()
+        input2Ref.current?.clear()
+        setIsModalOpen(false)
+    }
+
     return (
             <ScrollView className="flex-1 bg-background px-4">
+                <AppModal buttonLabel='Save' visible={isModalOpen} onClose={handleWorkoutTimeUpdate}>
+                    <View className='gap-4'>
+                        <Text className='font-semibold text-md text-black'>Enter your workout time </Text>
+                        <View className='w-full items-center flex-row'>
+                            <TextInput ref={input1Ref} maxLength={2} onChangeText={(text) => {
+                                setValue('');
+                                setValue(`${text}:`);
+                                if(text.length === 2) {
+                                    input2Ref.current?.focus();
+                                }
+                            }} keyboardType='number-pad' placeholder='00' className='placeholder:text-black border border-primary rounded-md w-[15%] text-sm text-center font-medium'/>
+                            <Text className='px-3'>⁚</Text>
+                            <TextInput ref={input2Ref} onEndEditing={(event) => {setValue(`${value}${event.nativeEvent.text} ${ampm.toUpperCase()}`)}} maxLength={2} keyboardType='number-pad' placeholder='00' className='placeholder:text-black border border-primary rounded-md w-[15%] text-sm text-center font-medium'/>
+                            <Text className='px-3'>⁚</Text>
+                                                
+                            <AMPMPicker selectedValue={ampm} setData={setAmpm} />
+                        </View>
+                    </View>
+                </AppModal>
                 <View className="mt-8 items-center">
                     <Text className="text-2xl font-mbold text-black">
                         Profile
@@ -39,7 +90,7 @@ export default function ProfileScreen() {
 
                 <View className='mt-8 gap-4 items-center flex-row px-6 py-4 border border-[#E5E5E5] rounded-sm'>
                     <View className='h-[60px] w-[60px] bg-primary rounded-full items-center justify-center'>
-                        <Text className='font-medium text-white text-[30px]'>R</Text>
+                        <Text className='font-medium text-white text-[30px]'>{user?.name[0]}</Text>
                     </View>
                     <View>
                         <Text className='text-black font-semibold text-lg'>{user?.name.split(" ")[0]}</Text>
@@ -77,26 +128,24 @@ export default function ProfileScreen() {
                                     <Text className='font-semibold text-sm text-black'>Auto-join classes</Text>
                                     <Text className='font-light text-xs'>Automatically join at scheduled time</Text>
                                 </View>
-                                <Pressable onPress={() => setAutoJoinClass(!autoJoinClass)} className={`h-7 w-12 rounded-full ${autoJoinClass ?  'bg-[#6E6E6E]' : 'bg-primary'} ${autoJoinClass ?  null : 'items-end'} justify-center p-1`}>
-                                    <View className='h-5 w-5 rounded-full bg-white'></View>
-                                </Pressable>
+                                <ToggleSwitch<"autojoinClass"> value={classSettings.autojoinClass} onChange={updateClassSettings} toggleKey="autojoinClass" />
                             </View>
                             <View className='flex-row justify-between items-center'>
                                 <View>
                                     <Text className='font-semibold text-sm text-black'>Default blur level</Text>
                                     <Text className='font-light text-xs'>Camera blur when joining</Text>
                                 </View>
-                                <BlurSelector width={35} borderColor='E37528' />
+                                <BlurSelector isDefault width={35} borderColor='E37528' />
                             </View>
                             <View className='flex-row justify-between items-center'>
                                 <View>
                                     <Text className='font-semibold text-sm text-black'>Preferred time slot</Text>
-                                    <Text className='font-light text-xs'>morning-6</Text>
+                                    <Text className='font-light text-xs'>{slotFormatted}</Text>
                                 </View>
-                                <View className='w-[32%] flex-row items-center gap-2 border border-primary px-2 py-2 rounded-sm'>
+                                <Pressable onPress={() => setIsModalOpen(true)} className='w-[32%] flex-row items-center gap-2 border border-primary px-2 py-2 rounded-sm'>
                                     <Clock />
                                     <Text className='font-medium text-sm'>Change</Text>
-                                </View>
+                                </Pressable>
                             </View>
                     </View>
                 </View>
@@ -113,36 +162,31 @@ export default function ProfileScreen() {
                                     <Text className='font-semibold text-sm text-black'>Class reminders</Text>
                                     <Text className='font-light text-xs'>30 minutes before class</Text>
                                 </View>
-                                <Pressable onPress={() => setClassReminder(!classReminder)} className={`h-7 w-12 rounded-full ${classReminder ?  'bg-[#6E6E6E]' : 'bg-primary'} ${classReminder ?  null : 'items-end'} justify-center p-1`}>
-                                    <View className='h-5 w-5 rounded-full bg-white'></View>
-                                </Pressable>
+                                <ToggleSwitch<NotificationKeys> value={notifications.classReminders} onChange={updateNotificationSettings} toggleKey="classReminders"/>
                             </View>
                             <View className='flex-row justify-between items-center'>
                                 <View>
                                     <Text className='font-semibold text-sm text-black'>Streak updates</Text>
                                     <Text className='font-light text-xs'>Daily progress notifications</Text>
                                 </View>
-                                <Pressable onPress={() => setStreakUpdates(!streakUpdates)} className={`h-7 w-12 rounded-full ${streakUpdates ?  'bg-[#6E6E6E]' : 'bg-primary'} ${streakUpdates ?  null : 'items-end'} justify-center p-1`}>
-                                    <View className='h-5 w-5 rounded-full bg-white'></View>
-                                </Pressable>
+                                <ToggleSwitch<NotificationKeys> value={notifications.streakUpdates} onChange={updateNotificationSettings} toggleKey="streakUpdates"/>
                             </View>
                             <View className='flex-row justify-between items-center'>
                                 <View>
                                     <Text className='font-semibold text-sm text-black'>Group messages</Text>
                                     <Text className='font-light text-xs'>From your circle members</Text>
                                 </View>
-                                <Pressable onPress={() => setGroupMessages(!groupMessages)} className={`h-7 w-12 rounded-full ${groupMessages ?  'bg-[#6E6E6E]' : 'bg-primary'} ${groupMessages ?  null : 'items-end'} justify-center p-1`}>
-                                    <View className='h-5 w-5 rounded-full bg-white'></View>
-                                </Pressable>
+                                <ToggleSwitch<NotificationKeys> value={notifications.groupMessages} onChange={updateNotificationSettings} toggleKey="groupMessages"/>
                             </View>
                             <View className='flex-row justify-between items-center'>
                                 <View>
                                     <Text className='font-semibold text-sm text-black'>Weekly progress</Text>
                                     <Text className='font-light text-xs'>Summary every Sunday</Text>
                                 </View>
-                                <Pressable onPress={() => setWeeklyPrograms(!weeklyPrograms)} className={`h-7 w-12 rounded-full ${weeklyPrograms ?  'bg-[#6E6E6E]' : 'bg-primary'} ${weeklyPrograms ?  null : 'items-end'} justify-center p-1`}>
+                                <ToggleSwitch<NotificationKeys> value={notifications.weeklyProgress} onChange={updateNotificationSettings} toggleKey="weeklyProgress"/>
+                                {/* <Pressable onPress={() => setWeeklyPrograms(!weeklyPrograms)} className={`h-7 w-12 rounded-full ${weeklyPrograms ?  'bg-[#6E6E6E]' : 'bg-primary'} ${weeklyPrograms ?  null : 'items-end'} justify-center p-1`}>
                                     <View className='h-5 w-5 rounded-full bg-white'></View>
-                                </Pressable>
+                                </Pressable> */}
                             </View>
                     </View>
                 </View>
@@ -162,7 +206,7 @@ export default function ProfileScreen() {
                             <Text className='font-semibold text-xs text-black'>Saved</Text>
                         </View>
                     </View>
-                    <Pressable className='bg-primary mt-3 rounded-sm flex-row gap-2 py-3 justify-center'>
+                    <Pressable onPress={handleInviteFriends} className='bg-primary mt-3 rounded-sm flex-row gap-2 py-3 justify-center'>
                         <ShareIcon />
                         <Text className='font-medium text-[16px] text-white'>Invite Friends</Text>
                     </Pressable>

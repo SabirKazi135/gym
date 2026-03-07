@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Image, Text, View } from "react-native";
+import { useAuthStore } from "@/store/useAuthStore";
 import Animated, {
     Easing,
     useAnimatedStyle,
@@ -11,8 +12,18 @@ import Animated, {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SplashScreen() {
+  const restoreSession = useAuthStore(state => state.restoreSession);
+
   const logoScale = useSharedValue(0.2);
   const textOpacity = useSharedValue(0);
+
+  useEffect(() => {
+    restoreSession();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const isLoading = useAuthStore(state => state.isLoading);
 
   useEffect(() => {
     logoScale.value = withTiming(1, {
@@ -23,20 +34,28 @@ export default function SplashScreen() {
     textOpacity.value = withDelay(1300, withTiming(1, { duration: 600 }));
 
     const timer = setTimeout(() => {
+      if (isLoading) return;
+
+    if (isAuthenticated) {
+      router.replace("/(main)/home");
+    } else {
       router.replace("/(auth)/onboarding");
+    }
     }, 2000);
 
+    
     return () => clearTimeout(timer);
-  }, [logoScale, textOpacity]);
-
+  }, [logoScale, textOpacity, isAuthenticated, isLoading]);
+  
   const logoStyle = useAnimatedStyle(() => ({
     transform: [{ scale: logoScale.value }],
   }));
-
+  
   const textStyle = useAnimatedStyle(() => ({
     opacity: textOpacity.value,
   }));
-
+  
+  
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 items-center justify-center">

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/useAuthStore";
+import { switchUserSettings } from "@/store/settingsStore";
 
 export default function SignIn() {
   const signup = useAuthStore((state) => state.signup);

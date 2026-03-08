@@ -1,6 +1,16 @@
-export function capitalize(value: string): string{
-    return value
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
+export function capitalize(value: string): string {
+  if (!value || typeof value !== "string") return "";
+
+  return value
+    .trim()
+    .split(/\s+/)
+    .map(word => {
+      if (!word) return "";
+
+      const first = word.charAt(0).toUpperCase();
+      const rest = word.slice(1).toLowerCase();
+
+      return first + rest;
+    })
+    .join(" ");
 }

@@ -8,12 +8,14 @@ type Props = {
   width?: number;
   borderColor?: string;
   isDefault?: boolean;
+  selected: BlurLevel;
+  onChange: React.Dispatch<React.SetStateAction<BlurLevel>>;
 }
 
-export default function CustomSelector({width = 60, borderColor = 'E5E5E5', isDefault = false} : Props) {
+export default function CustomSelector({width = 60, borderColor = 'E5E5E5', isDefault = false, selected, onChange} : Props) {
   const [open, setOpen] = useState(false);
   const classSettings = useSettingsStore(s => s.classSettings)
-  const [data, setData] = useState<string>(classSettings.defaultBlurLevel);
+  const [data, setData] = useState<BlurLevel>(selected);
   const updateClassSettings = useSettingsStore(s => s.updateClassSettings);
 
   const blurLevels: BlurLevel[] = [
@@ -52,6 +54,7 @@ export default function CustomSelector({width = 60, borderColor = 'E5E5E5', isDe
                   updateClassSettings("defaultBlurLevel", item)
                 }
                 else{
+                  onChange(item);
                   setData(item);
                 }
                 setOpen(false);

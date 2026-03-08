@@ -19,6 +19,7 @@ type settingsState = {
     classSettings: {
         autojoinClass: boolean
         defaultBlurLevel: BlurLevel
+        camaraOn: boolean
         preferredTimeSlot: string
     },
     updateNotificationSettings: (key: keyof settingsState['notifications'], value: boolean  ) => void
@@ -37,6 +38,7 @@ export const useSettingsStore = create<settingsState>()(
         classSettings: {
             autojoinClass: true,
             defaultBlurLevel: BlurLevel.Medium,
+            camaraOn: true,
             preferredTimeSlot: "08:00 AM",
         },
     

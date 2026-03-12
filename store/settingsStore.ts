@@ -1,0 +1,76 @@
+import { create } from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {persist, createJSONStorage} from 'zustand/middleware';
+
+export enum BlurLevel {
+    Low = "low",
+    Medium = "medium",
+    High = "high",
+    None = "none"
+}
+
+export const BlurValueMap: Record<BlurLevel, number> = {
+    [BlurLevel.Low]: 1,
+    [BlurLevel.Medium]: 2,
+    [BlurLevel.High]: 3,
+    [BlurLevel.None]: 0
+}
+
+type settingsState = {
+    notifications: {
+        classReminders: boolean
+        streakUpdates: boolean
+        groupMessages: boolean
+        weeklyProgress: boolean
+    },
+    classSettings: {
+        autojoinClass: boolean
+        defaultBlurLevel: BlurLevel
+        camaraOn: boolean
+        preferredTimeSlot: string
+    },
+    updateNotificationSettings: (key: keyof settingsState['notifications'], value: boolean  ) => void
+    updateClassSettings: <K extends keyof settingsState["classSettings"]>(key: K, value: settingsState["classSettings"][K]) => void
+}
+
+export const useSettingsStore = create<settingsState>()(
+    persist(
+        set => ({
+        notifications: {
+            classReminders: true,
+            streakUpdates: false,
+            groupMessages: true,
+            weeklyProgress: false,
+        },
+        classSettings: {
+            autojoinClass: true,
+            defaultBlurLevel: BlurLevel.Medium,
+            camaraOn: true,
+            preferredTimeSlot: "08:00 AM",
+        },
+    
+        updateNotificationSettings: (key, value) => {
+            set((state) => ({
+          notifications: {
+            ...state.notifications,
+            [key]: value,
+          },
+        }))
+        },
+    
+        updateClassSettings(key, value) {
+            set((state) => ({
+                classSettings:{
+                    ...state.classSettings,
+                    [key]: value,
+                }
+            }))
+        },
+        
+    }),
+    {
+        name: 'app_settings_default',
+        storage: createJSONStorage(() => AsyncStorage)
+    }
+    )
+)

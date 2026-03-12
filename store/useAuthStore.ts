@@ -14,7 +14,6 @@ type AuthState = {
   token: string | null;
 
   isAuthenticated: boolean;
-  isGuest: boolean;
   isLoading: boolean;
 
   signup: (data: {
@@ -36,7 +35,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
   isAuthenticated: false,
-  isGuest: false,
   isLoading: true,
 
   // ------------------
@@ -71,7 +69,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: { email, name: newUser.name },
       token,
       isAuthenticated: true,
-      isGuest: false,
     });
   },
 
@@ -105,7 +102,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: { email, name: savedUser.name },
       token,
       isAuthenticated: true,
-      isGuest: false,
     });
   },
 
@@ -121,7 +117,6 @@ export const useAuthStore = create<AuthState>((set) => ({
         user: parsed.user,
         token: parsed.token,
         isAuthenticated: true,
-        isGuest: false,
         isLoading: false,
       });
     } else {
@@ -141,7 +136,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: null,
       token: null,
       isAuthenticated: false,
-      isGuest: false,
     });
   },
 }));

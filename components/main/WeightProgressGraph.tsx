@@ -10,25 +10,21 @@ import Svg, {
 } from 'react-native-svg';
 import { useState } from 'react';
 
-export default function WeightProgressGraph({width} : {width: number}) {
+export default function WeightProgressGraph({width, data} : {width: number, data: {week: number, weight: number}[]}) {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     // const { width } = Dimensions.get('window');
     const height = 260;
 
-    type DataPoint = {
-        label: string;
-        value: number;
-    };
 
-    const data: DataPoint[] = [
-        { label: "Week 1", value: 75 },
-        { label: "Week 2", value: 73 },
-        { label: "Week 3", value: 71 },
-        { label: "Week 4", value: 69 },
-        { label: "Week 5", value: 68 },
-        { label: "Week 6", value: 67 },
-    ];
+    // const data: DataPoint[] = [
+    //     { label: "Week 1", value: 75 },
+    //     { label: "Week 2", value: 73 },
+    //     { label: "Week 3", value: 71 },
+    //     { label: "Week 4", value: 69 },
+    //     { label: "Week 5", value: 68 },
+    //     { label: "Week 6", value: 67 },
+    // ];
 
     const paddingLeft = 50;
     const paddingRight = 30;
@@ -38,8 +34,8 @@ export default function WeightProgressGraph({width} : {width: number}) {
     const graphWidth = width - paddingLeft - paddingRight;
     const graphHeight = height - paddingTop - paddingBottom;
 
-    const rawMin = Math.min(...data.map(d => d.value));
-    const rawMax = Math.max(...data.map(d => d.value));
+    const rawMin = Math.min(...data.map(d => d.weight));
+    const rawMax = Math.max(...data.map(d => d.weight));
 
     const range = rawMax - rawMin || 1;
     const paddingAmount = range * 0.5;
@@ -59,7 +55,7 @@ export default function WeightProgressGraph({width} : {width: number}) {
 
     const linePath = data.map((point, i) => {
         const x = xScale(i);
-        const y = yScale(point.value);
+        const y = yScale(point.weight);
         return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
     }).join(" ");
 
@@ -128,7 +124,7 @@ export default function WeightProgressGraph({width} : {width: number}) {
 
                 {data.map((point, i) => {
                     const x = xScale(i);
-                    const y = yScale(point.value);
+                    const y = yScale(point.weight);
                     return (
                         <React.Fragment key={i}>
                             {activeIndex === i && (
@@ -179,7 +175,7 @@ export default function WeightProgressGraph({width} : {width: number}) {
                         textAnchor="middle"
                         fontFamily='MontserratRegular'
                         >
-                        {point.label}
+                        {`Week ${point.week}`}
                         </SvgText>
                     );
                 })}
@@ -204,7 +200,7 @@ export default function WeightProgressGraph({width} : {width: number}) {
                 {activeIndex !== null && (() => {
                     const point = data[activeIndex];
                     const x = xScale(activeIndex);
-                    const y = yScale(point.value);
+                    const y = yScale(point.weight);
                     let tooltipX = x - TOOLTIP_WIDTH / 2;
                     const minX = paddingLeft;
                     const maxX = width - paddingRight - TOOLTIP_WIDTH;
@@ -219,10 +215,10 @@ export default function WeightProgressGraph({width} : {width: number}) {
                         <G>
                             <Rect x={tooltipX} y={tooltipY} width={TOOLTIP_WIDTH} height={TOOLTIP_HEIGHT} rx={4} fill="#fff" stroke="#aaa"/>
                             <SvgText x={tooltipX + TOOLTIP_WIDTH / 2} y={tooltipY + 22} fontSize="12" fill="#363636" textAnchor="end" fontFamily='MontserratRegular'>
-                                {point.label}
+                                {`Week: ${point.week}`}
                             </SvgText>
                             <SvgText x={tooltipX + TOOLTIP_WIDTH / 2} y={tooltipY + 40} fontSize="14" fill="#E37528" textAnchor="end" fontFamily='MontserratMedium'>
-                                Weight:{point.value}
+                                Weight:{point.weight}
                             </SvgText>
                         </G>
                     );

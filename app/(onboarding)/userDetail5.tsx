@@ -31,9 +31,6 @@ export default function UserDetail5() {
                                 <Ionicons name="chevron-down-outline" size={20} color="#F97316" />
                             )}
                         </Pressable>
-                        {/* <Modal style={{backgroundColor: '#A22E2E'}} visible={!open} animationType="slide" className='w-full h-[30%]'>
-
-                        </Modal> */}
                         {open && (
                             <View className='w-full px-6 rounded-md border-primary border aspect-square bg-[#A22E2E]'>
                                 {options.map(option => (
@@ -54,7 +51,6 @@ export default function UserDetail5() {
                         )}
                     </View>
                     <View className='gap-4'>
-                        
                         <Text className='font-medium'>Enter your workout time </Text>
                         <View className='w-full items-center flex-row'>
                             <TextInput maxLength={2} onPress={() => setOpen(false)} onChangeText={(text) => {
@@ -69,6 +65,7 @@ export default function UserDetail5() {
                             <Text className='px-3'>⁚</Text>
                             
                             <AMPMPicker selectedValue={ampm} setData={setAmpm} />
+                            
                         </View>
                     </View>
                  </View>
@@ -82,12 +79,14 @@ export default function UserDetail5() {
     );
 }
 
-function AMPMPicker({ setData, selectedValue }: { setData: React.Dispatch<React.SetStateAction<"am" | "pm">>, selectedValue: "am" | "pm" }) {
+export function AMPMPicker({ setData, selectedValue }: { setData: React.Dispatch<React.SetStateAction<"am" | "pm">>, selectedValue: "am" | "pm" }) {
     // const [selectedValue, setSelectedValue] = useState("am");
 
     const [open, setOpen] = useState(false);
     return (
-        <Pressable onPress={() => setOpen(!open)} className='border relative border-primary w-[18%] px-2 py-3 flex-row justify-between rounded-md items-center'>
+        <Pressable onPress={() => setOpen(!open)} style={{
+            zIndex: 20,
+          }} className='border relative border-primary w-[18%] px-2 py-3 flex-row justify-between rounded-md items-center'>
             <Text className='font-medium'>{selectedValue.toUpperCase()}</Text>
             {open ? (
                 <Ionicons name="chevron-up-outline" size={16} color="#F97316" />
@@ -95,7 +94,7 @@ function AMPMPicker({ setData, selectedValue }: { setData: React.Dispatch<React.
                 <Ionicons name="chevron-down-outline" size={16} color="#F97316" />
             )}
             {open && (
-                <View className='absolute top-12 bg-white border border-primary rounded-md w-[100%] z-10'>
+                <View className='absolute top-12 bg-white border border-primary rounded-md w-[200%] z-10'>
                     <Pressable onPress={() => {
                         setData("am");
                         setOpen(false);

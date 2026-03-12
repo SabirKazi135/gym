@@ -9,6 +9,13 @@ export enum BlurLevel {
     None = "none"
 }
 
+export const BlurValueMap: Record<BlurLevel, number> = {
+    [BlurLevel.Low]: 1,
+    [BlurLevel.Medium]: 2,
+    [BlurLevel.High]: 3,
+    [BlurLevel.None]: 0
+}
+
 type settingsState = {
     notifications: {
         classReminders: boolean

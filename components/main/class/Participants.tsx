@@ -6,19 +6,29 @@ import { useAuthStore } from "@/store/useAuthStore";
 type Props = {
     name: string;
     isMonitor?: boolean;
+    children: React.ReactNode;
+    showCameraFeed: boolean;
 };
-export default function Participants({name, isMonitor=false}: Props){
+const Participants: React.FC<Props> = ({children, name, isMonitor=false, showCameraFeed}) => {
   const { user } = useAuthStore();
-  const userFirstName = user?.name.split(" ")[0]
+  const actualUserFirstName = user?.name.split(" ")[0];
+  const userFirstName = name.split(" ")[0];
+  const adjustedName = name.length > 7 ? (name.slice(0, 8) + "...") : name;
+  
     return (
-        <View className='w-[31%] items-center relative'>
+        <View className='w-[100%] h-31 items-center relative'>
             <View className='absolute right-0'>
                 {isMonitor && <MonitorBadge />}
             </View>
-            <LinearGradient className='h-14 mt-3 w-14 items-center justify-center rounded-full overflow-hidden' colors={['#DE6E20', '#AB5519']} start={{x: 0, y: 0}} end={{x: 1, y: 1}}>
-                <Text className='font-semibold text-xl text-white'>{name[0]}</Text>
-            </LinearGradient>
-            <Text className='font-semibold text-xs text-black mt-2'>{userFirstName === name ? "You" : name}</Text>
+            <View className='h-[75%] w-[80%] rounded-full overflow-hidden'>
+                {showCameraFeed ? children : (
+                    <LinearGradient className='h-[100%] w-[100%] items-center justify-center rounded-full' colors={['#DE6E20', '#AB5519']} start={{x: 0, y: 0}} end={{x: 1, y: 1}}>
+                        <Text className='font-semibold text-xl text-white'>{name[0]}</Text>
+                    </LinearGradient>
+                )}
+                {/* { showCameraFeed && children} */}
+                </View>
+            <Text className='font-semibold text-xs text-black mt-2'>{actualUserFirstName === userFirstName ? "You" : adjustedName}</Text>
         </View>
     )
 }
@@ -30,3 +40,5 @@ function MonitorBadge(){
         </View>
     )
 }
+
+export default Participants;

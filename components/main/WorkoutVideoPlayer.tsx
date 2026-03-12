@@ -126,9 +126,11 @@ import RotatePlayerIcon from "assets/svgs/class/RotatePlayerIcon.svg"
 import Slider from "@react-native-community/slider"
 import { BlurView } from "expo-blur"
 import { useState, useMemo, useRef, useEffect } from "react"
-
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { useVideoPlayerStore } from "@/store/videoPlayerStore"
-import { useCompleteWorkout } from "@/hooks/mutations/useCompleteWorkout"
+import { useCompleteWorkout } from "@/hooks/mutations/useCompleteWorkout";
+import { useNavigation } from 'expo-router';
+import ViewParticipantsToggle from 'assets/svgs/class/ViewParticipantsToggle.svg'
 
 export default function WorkoutVideoPlayer({sessionId}:{sessionId: string}) {
 
@@ -142,10 +144,16 @@ export default function WorkoutVideoPlayer({sessionId}:{sessionId: string}) {
   } = useVideoPlayerStore()
   const completeWorkout = useCompleteWorkout()
 
+  const navigation = useNavigation();
+  const setIsFullScreen = useVideoPlayerStore(state => state.setIsFullScreen)
+  const isFullScreen = useVideoPlayerStore(state => state.isFullScreen)
+
   const workout = playlist[currentIndex]
 
   const [isMuted, setIsMuted] = useState(false)
   const [isControlsVisible, setIsControlsVisible] = useState(true)
+  // const [isLandscape, setIsLandscape] = useState(false);
+  const [showParticipantsInLandscape, setShowParticipantsInLandscape] = useState(false);
   const hideTimer = useRef<number | null>(null)
 
   const showControlsTemporarily = () => {
@@ -159,6 +167,31 @@ export default function WorkoutVideoPlayer({sessionId}:{sessionId: string}) {
     setIsControlsVisible(false)
   }, 3000)
 }
+
+  async function enterlandscape(){
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.LANDSCAPE
+    )
+    setIsFullScreen(true)
+  }
+
+  async function exitlandscape(){
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.PORTRAIT
+    )
+    setIsFullScreen(false)
+  }
+
+  function handlePlayerOrientation(){
+    if(!isFullScreen) {
+      enterlandscape()
+      // setIsLandscape(true)
+    }
+    else {
+      exitlandscape()
+      // setIsLandscape(false)
+    }
+  }
 
 //   const videoUrl = playlist[currentIndex]?.url ?? ""
 const videoUrl = useMemo(() => playlist[currentIndex]?.url ?? "", [playlist, currentIndex])
@@ -260,85 +293,85 @@ useEffect(() => {
     const secs = Math.floor(time % 60)
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`
   }
-
   return (
-    <Pressable onPress={showControlsTemporarily} className="relative items-center overflow-hidden rounded-md justify-center">
-      {videoUrl !== "" && (
-        // <View className="bg-primary border border-primary border-3">
-            <VideoView
-              key={currentIndex}
-              player={player}
-              style={styles.video}
-              contentFit="cover"
-              allowsPictureInPicture
-              nativeControls={false}
-            />
-        // </Pressable>
-      )}
+    <View>
+      <Pressable onPress={showControlsTemporarily} className={`border relative ${isFullScreen ? "items-start" : "items-center"} overflow-hidden rounded-md justify-center`}>
+        {videoUrl !== "" && (
+          // <View className="bg-primary border border-primary border-3">
+              <VideoView
+                key={currentIndex}
+                player={player}
+                style={{height: "100%", width: isFullScreen ? "95%" : "100%"}}
+                contentFit="cover"
+                allowsPictureInPicture
+                nativeControls={false}
+              />
+          // </Pressable>
+        )}
 
-      {
-        isControlsVisible && (
-      <View className="absolute">
-        <View className="flex-row items-center gap-6">
-
-          <Pressable onPress={() => player.currentTime = Math.max(player.currentTime - 10, 0)}>
-            <PeekBack />
-          </Pressable>
-
-          <Pressable onPress={togglePlayback} className="mx-6">
-            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-          </Pressable>
-
-          <Pressable onPress={() => player.currentTime = Math.min(player.currentTime + 10, duration)}>
-            <PeekForward />
-          </Pressable>
-
-        </View>
-      </View>
-        )
-      }
-
-      {isControlsVisible && (
-      <View className={`absolute bottom-4 w-full px-2`}>
-        <View className="justify-between mb-1 px-4 flex-row">
-
-          <BlurView intensity={50} tint="dark" className="bg-black px-4 overflow-hidden rounded-full">
-            <Text className="font-semibold text-white">
-              {formatTime(currentTime)} / {formatTime(duration)}
-            </Text>
-          </BlurView>
-
-          <View className="flex-row gap-4 items-center">
-
-            <Pressable onPress={toggleMute}>
-              {isMuted ? <AudioMuteIcon /> : <AudioUnmuteIcon />}
+        {
+          isControlsVisible && (
+        <View className="absolute border bottom-0 left-0 right-0 top-0 justify-center items-center">
+          <View className="flex-row items-center gap-6">
+            <Pressable onPress={() => player.currentTime = Math.max(player.currentTime - 10, 0)}>
+              <PeekBack />
             </Pressable>
 
-            <RotatePlayerIcon />
+            <Pressable onPress={togglePlayback} className="mx-6">
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </Pressable>
+
+            <Pressable onPress={() => player.currentTime = Math.min(player.currentTime + 10, duration)}>
+              <PeekForward />
+            </Pressable>
 
           </View>
         </View>
+          )
+        }
 
-        <Slider
-          minimumValue={0}
-          maximumValue={duration || 0}
-          value={currentTime}
-          onSlidingComplete={seek}
-          minimumTrackTintColor="#DE6E20"
-          maximumTrackTintColor="#E2E2E2"
-          thumbTintColor="#f97316"
-        />
+        {isControlsVisible && (
+        <View className={`absolute bottom-4 ${isFullScreen ? "w-[95%]" : "w-full" } px-2`}>
+          <View className="justify-between mb-1 px-4 flex-row">
 
-      </View>
+            <BlurView intensity={50} tint="dark" className="bg-black px-4 overflow-hidden rounded-full">
+              <Text className="font-semibold text-white">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </Text>
+            </BlurView>
+
+            <View className="flex-row gap-4 items-center">
+
+              <Pressable onPress={toggleMute}>
+                {isMuted ? <AudioMuteIcon /> : <AudioUnmuteIcon />}
+              </Pressable>
+
+              <Pressable onPress={handlePlayerOrientation}>
+                <RotatePlayerIcon />
+              </Pressable>
+
+            </View>
+          </View>
+
+          <Slider
+            minimumValue={0}
+            maximumValue={duration || 0}
+            value={currentTime}
+            onSlidingComplete={seek}
+            minimumTrackTintColor="#DE6E20"
+            maximumTrackTintColor="#E2E2E2"
+            thumbTintColor="#f97316"
+          />
+
+        </View>
+        )}
+
+      </Pressable>
+      {isFullScreen && (
+        <View>
+          <Text>Hi</Text>
+        </View>
       )}
-
-    </Pressable>
+    </View>
   )
 }
-
-const styles = StyleSheet.create({
-  video: {
-    width: 360,
-    height: 200
-  }
-})

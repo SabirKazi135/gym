@@ -7,12 +7,20 @@ import DietIcon from "assets/svgs/DietIcon";
 import ProfileIcon from "assets/svgs/ProfileIcon";
 import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useVideoPlayerStore } from "@/store/videoPlayerStore";
+import { useEffect } from "react";
 
 export default function MainLayout() {
+  const isFullscreen = useVideoPlayerStore(state => state.isFullScreen);
+  const setIsFullScreen = useVideoPlayerStore(state => state.setIsFullScreen);
+  useEffect(() => {
+    setIsFullScreen(false)
+  }, [])
+  console.log(isFullscreen)
   return (
     <>
-    <StatusBar barStyle="dark-content" />
-    <SafeAreaView className="flex-1 bg-background">
+    <StatusBar barStyle="dark-content" hidden={isFullscreen} />
+    <SafeAreaView className="flex-1 bg-background" edges={isFullscreen ? [] : ["top", "bottom", "left", "right"]}>
     <Tabs screenOptions={
       { headerShown: false,
         tabBarActiveTintColor: "#E37528",
@@ -26,6 +34,7 @@ export default function MainLayout() {
           paddingBottom: 5,
           paddingTop: 5,
           paddingHorizontal: 12,
+          display: isFullscreen ? "none" : "flex",
         },
         tabBarIconStyle: {
           marginBottom: 5,

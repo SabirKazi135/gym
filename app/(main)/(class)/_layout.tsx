@@ -20,11 +20,12 @@ export default function ClassLayout() {
   const defaultBlurLevel = useSettingsStore(s => s.classSettings.defaultBlurLevel)
   const [localCamaraMode, setLocalCamaraMode] = useState<boolean>(false);
   const [localBlur, setLocalBlur] = useState<BlurLevel>(defaultBlurLevel);
+  const [isLandscape, setIsLandscape] = useState(false)
   
 
   const value = useMemo(
-    () => ({ localCamaraMode, setLocalCamaraMode, localBlur, setLocalBlur }),
-    [localCamaraMode, localBlur]
+    () => ({ localCamaraMode, setLocalCamaraMode, localBlur, setLocalBlur, isLandscape, setIsLandscape }),
+    [localCamaraMode, localBlur, isLandscape]
   );
 
   
@@ -33,6 +34,12 @@ export default function ClassLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="classOnTap" />
         <Stack.Screen name="classTrainingZone" />
+        <Stack.Screen name="classFullScreen" 
+        options={{
+          headerShown: false,
+          presentation: "fullScreenModal"
+        }}
+        />
       </Stack>
     </CameraContext.Provider>
   );

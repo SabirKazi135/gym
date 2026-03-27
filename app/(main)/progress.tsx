@@ -11,6 +11,7 @@ import WeightIcon from 'assets/svgs/WeightIcon.svg';
 import WeightProgressGraph from '@/components/main/WeightProgressGraph';
 import AwardCard from '@/components/main/AwardCard';
 import * as AwardIcons from 'assets/svgs/awards';
+import { useProgress } from '@/hooks/queries/useProgress';
 
 export default function ProgressScreen() {
     const [selectedSection, setSelectedSection] = useState("overview");
@@ -74,6 +75,8 @@ export default function ProgressScreen() {
   }
 ]
 
+    const {data, isLoading, error} = useProgress()
+
     return (
         <ScrollView className="flex-1 bg-background" showsVerticalScrollIndicator={false}>
             <View className='mx-4'>
@@ -86,19 +89,19 @@ export default function ProgressScreen() {
                         <View className=''>
                             <View className='px-2 flex-row gap-2'>
                                 <FireStroke />
-                                <Text className='font-semibold text-xl text-white'>0</Text>
+                                <Text className='font-semibold text-xl text-white'>{data?.streak}</Text>
                             </View>
                             <Text className='font-semibold text-sm text-white'>streak</Text>
                         </View>
                         <View className=''>
                             <View className='px-2 justify-end flex-row gap-2'>
-                                <Text className='font-semibold text-xl text-white'>2</Text>
+                                <Text className='font-semibold text-xl text-white'>{data?.dayOf100}</Text>
                             </View>
                             <Text className='font-semibold text-sm text-white'>of 100 Days</Text>
                         </View>
                     </View>
                     <View className='w-full rounded-full mt-4 h-2 bg-[#F4842F]'>
-                        <View className='w-[2%] h-2 bg-[#FFFEFD] rounded-full'></View>
+                        <View className={`w-[${data?.dayOf100}%] h-2 bg-[#FFFEFD] rounded-full`}></View>
                     </View>
                 </LinearGradient>
                 <View className='flex-row rounded-full p-1 bg-[#EBEBEB] mt-6'>
@@ -120,10 +123,10 @@ export default function ProgressScreen() {
                             <Text className='font-semibold text-sm'>Attendance Summary</Text>
                         </View>
                         <View className='flex-row justify-between mt-6'>
-                            {attendance.map((item, index) => (
+                            {data?.overview.attendance.map((item, index) => (
                                 <View key={index} className='items-center w-12'>
                                     <View className={` ${item.status === "attended" ? "bg-[#01B75B]" : item.status === "missed" ? "bg-[#B70104]" : "bg-[#EBEBEB]"} py-6 w-8 items-center rounded-[3px]`}>
-                                        <Text className={`font-semibold text-sm ${item.status === "upcoming" ? "text-black" : "text-white"} `}>{`${item.date}`}</Text>
+                                        <Text className={`font-semibold text-sm ${item.status === "upcoming" ? "text-black" : "text-white"} `}>{`${item.date.split("-")[2]}`}</Text>
                                     </View>
                                     <Text className='font-regular text-sm'>{`${item.day}`}</Text>
                             </View>
@@ -133,12 +136,12 @@ export default function ProgressScreen() {
                     <View className='w-full flex-row justify-between mt-6'>
                         <View className='border rounded-md border-[#E5E5E5] items-center py-8 w-[47%]'>
                             <WeightDownGraph />
-                            <Text className='font-semibold mt-2 text-black text-xl'>-1.9 kg</Text>
+                            <Text className='font-semibold mt-2 text-black text-xl'>{`${data?.overview.totalWeightChange} KG`}</Text>
                             <Text className='font-light mt-[-4] text-sm'>Total Weight Loss</Text>
                         </View>
                         <View className='border rounded-md border-[#E5E5E5] text-black items-center py-8 w-[47%]'>
                             <Trophy />
-                            <Text className='font-semibold mt-2 text-black text-xl'>2</Text>
+                            <Text className='font-semibold mt-2 text-black text-xl'>{data?.overview.achievementsUnlocked}</Text>
                             <Text className='font-light mt-[-4] text-sm'>Achivements</Text>
                         </View>
                     </View>
@@ -167,7 +170,7 @@ export default function ProgressScreen() {
                                 const { width } = event.nativeEvent.layout;
                                 setGraphWidth(width);
                             }}>
-                                <WeightProgressGraph width={graphWidth} />
+                                <WeightProgressGraph width={graphWidth} data={data?.weight.history || []} />
                             </View>
                         </View>
                     </View>

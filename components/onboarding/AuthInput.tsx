@@ -42,7 +42,7 @@ export default function AuthInput({
         onChangeText={onChangeText}
         placeholder={placeholder}
         secureTextEntry={secure}
-        className="flex-1 text-[15px] placeholder:text-[#363636]  font-regular outline-none"
+        className="flex-1 text-[15px] text-black placeholder:text-[#363636]  font-regular outline-none"
       />
 
       {/* RIGHT ICON (PASSWORD EYE) */}
